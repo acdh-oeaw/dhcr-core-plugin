@@ -55,6 +55,7 @@ class CoursesTable extends Table
 		'course_type_id',
 		'course_parent_type_id',
 		'recent',
+        'online',
 		'start_date',
 		'end_date',
 		'sort'
@@ -278,14 +279,15 @@ class CoursesTable extends Table
 		$this->getSorters();
 	}
 	
-    
+ 
 	public function getCleanQuery($query = array()) {
 		foreach($query as $key => &$value) {
 			if(	!in_array($key, $this->allowedFilters)
 			AND !in_array($key, $this->allowedTags)) {
 				unset($query[$key]);
 				continue;
-			}if(is_string($value) AND strpos($value, ',') !== false) {
+			}
+			if(is_string($value) AND strpos($value, ',') !== false) {
 				$value = array_map('trim', explode(',', $value));
 				$value = array_filter($value);    // remove empty elements
 				// remove non-digits
@@ -306,12 +308,25 @@ class CoursesTable extends Table
 			switch($key) {
 				case 'recent':
 					if($value == true || $value === '') {
-						$query['recent'] = true;
+						$this->query['recent'] = true;
 						$conditions['Courses.deleted'] = false;
 						$conditions['Courses.updated >'] = date('Y-m-d H:i:s', time() - 60*60*24*489);
 					}
 					break;
-				case 'start_date':
+                case 'online':
+                    // TODO: adjust test case to reflect this addition
+                    if($value === true || strtolower($value) === 'true' || $value === 1) {
+                        $this->query['online'] = true;
+                        $conditions['Courses.online_course'] = true;
+                    }elseif($value === false || strtolower($value) === 'false' || $value === 0) {
+                        $this->query['online'] = false;
+                        $conditions['Courses.online_course'] = false;
+                    }elseif($value === null || $value === '') {
+                        unset($this->query['online']);
+                    }
+                    break;
+                case 'start_date':
+				    // TODO: create some validation of valid dates
 					if(is_string($value)) $conditions['Courses.created >='] = $value;
 					break;
 				case 'end_date':
@@ -320,13 +335,12 @@ class CoursesTable extends Table
 				case 'sort':
 					break;
 				default:
-					if(!is_array($value))
-						$conditions['Courses.'.$key] = $value;
+					if(is_array($value))
+                        $conditions['Courses.'.$key.' IN'] = $value;
 					else
-						$conditions['Courses.'.$key.' IN'] = $value;
+						$conditions['Courses.'.$key] = $value;
 			}
 		}
-		
 		return $this->filter = $conditions;
 	}
 	
