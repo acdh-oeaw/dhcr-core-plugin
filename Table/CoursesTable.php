@@ -56,6 +56,7 @@ class CoursesTable extends Table
 		'course_parent_type_id',
 		'recent',
         'online',
+        'recurring',
 		'start_date',
 		'end_date',
 		'sort'
@@ -323,6 +324,18 @@ class CoursesTable extends Table
                         $conditions['Courses.online_course'] = false;
                     }elseif($value === null || $value === '') {
                         unset($this->query['online']);
+                    }
+                    break;
+                case 'recurring':
+                    // TODO: adjust test case to reflect this addition
+                    if($value === true || strtolower($value) === 'true' || $value === 1) {
+                        $this->query['recurring'] = true;
+                        $conditions['Courses.recurring'] = true;
+                    }elseif($value === false || strtolower($value) === 'false' || $value === 0) {
+                        $this->query['recurring'] = false;
+                        $conditions['Courses.recurring'] = false;
+                    }elseif($value === null || $value === '') {
+                        unset($this->query['recurring']);
                     }
                     break;
                 case 'start_date':
