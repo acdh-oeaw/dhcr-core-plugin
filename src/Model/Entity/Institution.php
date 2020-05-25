@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Entity;
+namespace DhcrCore\Model\Entity;
 
 use Cake\ORM\Entity;
 use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
@@ -25,10 +25,10 @@ use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
  */
 class Institution extends Entity
 {
-	
+
 	use LazyLoadEntityTrait;
-	
-	
+
+
 	/**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -53,17 +53,17 @@ class Institution extends Entity
         'courses' => true,
         'users' => true
     ];
-    
+
     protected $_hidden = [
     	'lon',
 		'lat',
 		'users',
 		'courses'
 	];
-	
+
 	// make virtual fields visible for JSON serialization
 	//protected $_virtual = ['course_count'];
-	
+
 	protected function _getCourseCount() {
 		return count($this->courses);
 	}

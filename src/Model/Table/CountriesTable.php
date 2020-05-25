@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Table;
+namespace DhcrCore\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -24,15 +24,15 @@ use Cake\Validation\Validator;
  */
 class CountriesTable extends Table
 {
-	
+
 	public $query = array();
-	
+
 	public $allowedParameters = [
 		'course_count',
 		'sort_count'
 	];
-	
-	
+
+
 	/**
      * Initialize method
      *
@@ -42,20 +42,20 @@ class CountriesTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-	
-		$this->addBehavior('CounterSort');
+
+		$this->addBehavior('DhcrCore.CounterSort');
 
         $this->setTable('countries');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Cities', [
+        $this->hasMany('DhcrCore.Cities', [
             'foreignKey' => 'country_id'
         ]);
-        $this->hasMany('Courses', [
+        $this->hasMany('DhcrCore.Courses', [
             'foreignKey' => 'country_id'
         ]);
-        $this->hasMany('Institutions', [
+        $this->hasMany('DhcrCore.Institutions', [
             'foreignKey' => 'country_id'
         ]);
     }
@@ -90,15 +90,15 @@ class CountriesTable extends Table
 
         return $validator;
     }
-	
-	
+
+
 	// entrance point for querystring evaluation
 	public function evaluateQuery($requestQuery = array()) {
 		$this->getCleanQuery($requestQuery);
 		$this->getFilter();
 	}
-	
-	
+
+
 	public function getCleanQuery($query = array()) {
 		foreach($query as $key => $value) {
 			if(!in_array($key, $this->allowedParameters)) {
@@ -108,8 +108,8 @@ class CountriesTable extends Table
 		}
 		return $this->query = $query;
 	}
-	
-	
+
+
 	public function getFilter() {
 		foreach($this->query as $key => $value) {
 			switch($key) {
@@ -123,8 +123,8 @@ class CountriesTable extends Table
 		}
 		return $this->query;
 	}
-    
-    
+
+
     public function getCountry($id = null) {
     	$country = $this->get($id, [
 			'contain' => [],
@@ -133,7 +133,7 @@ class CountriesTable extends Table
     	$country->setVirtual(['course_count']);
     	return $country;
 	}
-	
+
 	/*
 	 * Due to iterative post-processing, method returns either array of entities or array of arrays!
 	 */
@@ -143,7 +143,7 @@ class CountriesTable extends Table
 			->contain([])
 			->order(['Countries.name' => 'ASC'])
 			->toArray();
-        
+
         if(!empty($this->query['course_count']) OR !empty($this->query['sort_count']))
             foreach($countries as &$country) $country->setVirtual(['course_count']);
         // sort by course_count descending, using CounterSortBehavior
@@ -152,7 +152,7 @@ class CountriesTable extends Table
 
 		return $countries;
 	}
-	
-	
-	
+
+
+
 }

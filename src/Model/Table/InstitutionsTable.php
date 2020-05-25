@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Table;
+namespace DhcrCore\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -27,9 +27,9 @@ use Cake\Validation\Validator;
  */
 class InstitutionsTable extends Table
 {
-	
+
 	public $query = array();
-	
+
 	public $allowedParameters = [
 		'course_count',
 		'sort_count',
@@ -37,7 +37,7 @@ class InstitutionsTable extends Table
 		'country_id',
 		'city_id'
 	];
-	
+
 	/**
      * Initialize method
      *
@@ -47,8 +47,8 @@ class InstitutionsTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-	
-		$this->addBehavior('CounterSort');
+
+		$this->addBehavior('DhcrCore.CounterSort');
 
         $this->setTable('institutions');
         $this->setDisplayField('name');
@@ -122,16 +122,16 @@ class InstitutionsTable extends Table
 
         return $rules;
     }
-	
-	
-	
+
+
+
 	// entrance point for querystring evaluation
 	public function evaluateQuery($requestQuery = array()) {
 		$this->getCleanQuery($requestQuery);
 		$this->getFilter();
 	}
-	
-	
+
+
 	public function getCleanQuery($query = array()) {
 		foreach($query as $key => $value) {
 			if(!in_array($key, $this->allowedParameters)) {
@@ -141,8 +141,8 @@ class InstitutionsTable extends Table
 		}
 		return $this->query = $query;
 	}
-	
-	
+
+
 	public function getFilter() {
 		foreach($this->query as $key => $value) {
 			switch($key) {
@@ -170,12 +170,12 @@ class InstitutionsTable extends Table
 					}
 			}
 		}
-		
+
 		return $this->query;
 	}
-	
-	
-	
+
+
+
 	public function getInstitution($id = null) {
 		$institution = $this->get($id, [
 			'contain' => ['Countries','Cities'],
@@ -184,7 +184,7 @@ class InstitutionsTable extends Table
 		$institution->setVirtual(['course_count']);
 		return $institution;
 	}
-	
+
 	/*
 	 * Due to iterative post-processing, method returns either array of entities or array of arrays!
 	 */
@@ -197,16 +197,16 @@ class InstitutionsTable extends Table
 			$institutions->where(['Institutions.country_id' => $this->query['country_id']]);
 		if(!empty($this->query['city_id']) AND empty($this->query['country_id']))
 			$institutions->where(['Institutions.city_id' => $this->query['city_id']]);
-		
+
 		// calling toArray directly does not change the object by reference - assignment required
 		$institutions = $institutions->toArray();
-        
+
         if(!empty($this->query['course_count']) OR !empty($this->query['sort_count']))
             foreach($institutions as &$institution) $institution->setVirtual(['course_count']);
         // sort by course_count descending, using CounterSortBehavior
         if(!empty($this->query['sort_count']))
             $institutions = $this->sortByCourseCount($institutions);
-		
+
 		// mapReduce does not work on result array: $institution->mapReduce($mapper, $reducer);
 		if(!empty($this->query['group'])) {
 			$result = [];
@@ -216,9 +216,9 @@ class InstitutionsTable extends Table
 			$institutions = $result;
 			ksort($institutions, SORT_STRING);
 		}
-		
+
 		return $institutions;
 	}
-	
-	
+
+
 }

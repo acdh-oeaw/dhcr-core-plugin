@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Table;
+namespace DhcrCore\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -37,16 +37,18 @@ use Cake\Utility\Hash;
  */
 class CoursesTable extends Table
 {
-	
+
 	public $query = array();
-	
+
 	public $joins = array();	// filter by associated data
-	
+
 	public $filter = array();	// oldschool find conditions
-	
+
 	public $sorters = array();		// sort criteria
-	
-	
+
+    public function foo() { return 'bar'; }
+
+
 	public $allowedFilters = [
 		'country_id',
 		'city_id',
@@ -61,13 +63,13 @@ class CoursesTable extends Table
 		'end_date',
 		'sort'
 	];
-	
+
 	public $allowedTags = [
 		'discipline_id',
 		'tadirah_object_id',
 		'tadirah_technique_id',
 	];
-	
+
 	public $containments = [
 		'DeletionReasons',
 		'Countries',
@@ -81,7 +83,7 @@ class CoursesTable extends Table
 		'TadirahTechniques',
 		'TadirahObjects'
 	];
-	
+
 	/**
      * Initialize method
      *
@@ -98,46 +100,46 @@ class CoursesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Users', [
+        $this->belongsTo('DhcrCore.Users', [
             'foreignKey' => 'user_id'
         ]);
-        $this->belongsTo('DeletionReasons', [
+        $this->belongsTo('DhcrCore.DeletionReasons', [
             'foreignKey' => 'deletion_reason_id'
         ]);
-        $this->belongsTo('Countries', [
+        $this->belongsTo('DhcrCore.Countries', [
             'foreignKey' => 'country_id'
         ]);
-        $this->belongsTo('Cities', [
+        $this->belongsTo('DhcrCore.Cities', [
             'foreignKey' => 'city_id'
         ]);
-        $this->belongsTo('Institutions', [
+        $this->belongsTo('DhcrCore.Institutions', [
             'foreignKey' => 'institution_id'
         ]);
-        $this->belongsTo('CourseParentTypes', [
+        $this->belongsTo('DhcrCore.CourseParentTypes', [
             'foreignKey' => 'course_parent_type_id'
         ]);
-        $this->belongsTo('CourseTypes', [
+        $this->belongsTo('DhcrCore.CourseTypes', [
             'foreignKey' => 'course_type_id'
         ]);
-        $this->belongsTo('Languages', [
+        $this->belongsTo('DhcrCore.Languages', [
             'foreignKey' => 'language_id'
         ]);
-        $this->belongsTo('CourseDurationUnits', [
+        $this->belongsTo('DhcrCore.CourseDurationUnits', [
             'foreignKey' => 'course_duration_unit_id'
         ]);
-        $this->hasMany('CoursesDisciplines', [
+        $this->hasMany('DhcrCore.CoursesDisciplines', [
             'foreignKey' => 'course_id'
         ]);
-        $this->hasMany('CoursesTadirahObjects', [
+        $this->hasMany('DhcrCore.CoursesTadirahObjects', [
             'foreignKey' => 'course_id'
         ]);
-        $this->hasMany('CoursesTadirahTechniques', [
+        $this->hasMany('DhcrCore.CoursesTadirahTechniques', [
             'foreignKey' => 'course_id'
         ]);
-        
-        $this->belongsToMany('Disciplines');
-        $this->belongsToMany('TadirahTechniques');
-        $this->belongsToMany('TadirahObjects');
+
+        $this->belongsToMany('DhcrCore.Disciplines');
+        $this->belongsToMany('DhcrCore.TadirahTechniques');
+        $this->belongsToMany('DhcrCore.TadirahObjects');
     }
 
     /**
@@ -270,8 +272,8 @@ class CoursesTable extends Table
 
         return $rules;
     }
-	
-	
+
+
 	// entrance point for querystring evaluation
 	public function evaluateQuery($requestQuery = array()) {
 		$this->getCleanQuery($requestQuery);
@@ -279,8 +281,8 @@ class CoursesTable extends Table
 		$this->getJoins();
 		$this->getSorters();
 	}
-	
- 
+
+
 	public function getCleanQuery($query = array()) {
 		foreach($query as $key => &$value) {
 			if(	!in_array($key, $this->allowedFilters)
@@ -300,8 +302,8 @@ class CoursesTable extends Table
 		}
 		return $this->query = $query;
 	}
-    
-    
+
+
     public function getFilter() {
 		$conditions = ['Courses.active' => true];
 		foreach($this->query as $key => $value) {
@@ -356,8 +358,8 @@ class CoursesTable extends Table
 		}
 		return $this->filter = $conditions;
 	}
-	
-	
+
+
 	public function getJoins() {
     	$joins = [];
     	foreach($this->query as $key => $value) {
@@ -387,11 +389,11 @@ class CoursesTable extends Table
 					];
 			}
 		}
-    	
+
     	return $this->joins = $joins;
 	}
-	
-	
+
+
 	public function getSorters() {
     	if(!empty($this->query['sort'])) {
     		$value = $this->query['sort'];
@@ -405,7 +407,7 @@ class CoursesTable extends Table
 		}
     	return $this->sorters;
 	}
-	
+
 	// do some checking for contained models, existing fields and assume defaults...
 	private function __getValidSorter(&$sorters = array(), $value) {
 		$direction = 'ASC';
@@ -417,7 +419,7 @@ class CoursesTable extends Table
 				$direction = strtoupper($expl[1]);
 			$sortkey = $expl[0];
 		}
-  
+
 		if(strpos($sortkey, '.') === false) $sortkey = 'Courses.'.$sortkey;
 		$expl = array_map('trim', explode('.', $sortkey));
 		$model = $expl[0];
@@ -433,8 +435,8 @@ class CoursesTable extends Table
 			}
 		}
 	}
-	
-	
+
+
 	public function getResults() {
 		$query = $this->find()->distinct()
 			->contain($this->containments);
@@ -444,11 +446,11 @@ class CoursesTable extends Table
 		}
 		$query->order($this->sorters);
 		$query->where($this->filter);
-		
+
 		return $query->toArray();
 	}
-	
-	
+
+
 	public function countResults() {
 		$query = $this->find()->distinct();
 		foreach($this->joins as $join) {
@@ -456,10 +458,10 @@ class CoursesTable extends Table
 			$this->filter[] = $join['conditions'];
 		}
 		$query->where($this->filter);
-		
+
 		return $query->count();
 	}
-	
-	
-	
+
+
+
 }

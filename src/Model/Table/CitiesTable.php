@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Table;
+namespace DhcrCore\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -24,18 +24,18 @@ use Cake\Validation\Validator;
  */
 class CitiesTable extends Table
 {
-	
-	
+
+
 	public $query = array();
-	
+
 	public $allowedParameters = [
 		'course_count',
 		'sort_count',
 		'group',
 		'country_id'
 	];
-	
-	
+
+
 	/**
      * Initialize method
      *
@@ -45,21 +45,21 @@ class CitiesTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-	
-		$this->addBehavior('CounterSort');
-	
+
+		$this->addBehavior('DhcrCore.CounterSort');
+
 		$this->setTable('cities');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Countries', [
+        $this->belongsTo('DhcrCore.Countries', [
             'foreignKey' => 'country_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('Courses', [
+        $this->hasMany('DhcrCore.Courses', [
             'foreignKey' => 'city_id'
         ]);
-        $this->hasMany('Institutions', [
+        $this->hasMany('DhcrCore.Institutions', [
             'foreignKey' => 'city_id'
         ]);
     }
@@ -98,15 +98,15 @@ class CitiesTable extends Table
 
         return $rules;
     }
-	
-	
+
+
 	// entrance point for querystring evaluation
 	public function evaluateQuery($requestQuery = array()) {
 		$this->getCleanQuery($requestQuery);
 		$this->getFilter();
 	}
-	
-	
+
+
 	public function getCleanQuery($query = array()) {
 		foreach($query as $key => $value) {
 			if(!in_array($key, $this->allowedParameters)) {
@@ -116,8 +116,8 @@ class CitiesTable extends Table
 		}
 		return $this->query = $query;
 	}
-	
-	
+
+
 	public function getFilter() {
 		foreach($this->query as $key => $value) {
 			switch($key) {
@@ -139,8 +139,8 @@ class CitiesTable extends Table
 		}
 		return $this->query;
 	}
-	
-	
+
+
 	public function getCity($id = null) {
 		$city = $this->get($id, [
 			'contain' => ['Countries'],
@@ -149,7 +149,7 @@ class CitiesTable extends Table
 		$city->setVirtual(['course_count']);
 		return $city;
 	}
-	
+
 	/*
 	 * Due to iterative post-processing, method returns either array of entities or array of arrays!
 	 */
@@ -160,16 +160,16 @@ class CitiesTable extends Table
 			->order(['Cities.name' => 'ASC']);
 		if(!empty($this->query['country_id']))
 			$cities->where(['country_id' => $this->query['country_id']]);
-		
+
 		// calling toArray directly does not change the object by reference - assignment required
 		$cities = $cities->toArray();
-		
+
 		if(!empty($this->query['course_count']) OR !empty($this->query['sort_count']))
             foreach($cities as &$city) $city->setVirtual(['course_count']);
-        // sort by course_count descending, using CounterSortBehavior
+        // sort by course_count descending, using DhcrCore.CounterSortBehavior
         if(!empty($this->query['sort_count']))
             $cities = $this->sortByCourseCount($cities);
-		
+
 		// mapReduce does not work on result array: $cities->mapReduce($mapper, $reducer);
 		if(!empty($this->query['group'])) {
 			$result = [];
@@ -179,10 +179,10 @@ class CitiesTable extends Table
 			$cities = $result;
 			ksort($cities, SORT_STRING);
 		}
-		
+
 		return $cities;
 	}
-	
-	
- 
+
+
+
 }

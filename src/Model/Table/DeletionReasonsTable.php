@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Table;
+namespace DhcrCore\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -61,8 +61,8 @@ class DeletionReasonsTable extends Table
 
         return $validator;
     }
-	
-	
+
+
 	public function getDeletionReason($id = null) {
 		$record = $this->get($id, [
 			'contain' => [],
@@ -70,8 +70,8 @@ class DeletionReasonsTable extends Table
 		]);
 		return $record;
 	}
-	
-	
+
+
 	public function getDeletionReasons() {
 		$records = $this->find()
 			->select(['id','name'])
@@ -79,5 +79,5 @@ class DeletionReasonsTable extends Table
 			->toArray();
 		return $records;
 	}
- 
+
 }

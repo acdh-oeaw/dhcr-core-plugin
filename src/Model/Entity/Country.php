@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Entity;
+namespace DhcrCore\Model\Entity;
 
 use Cake\ORM\Entity;
 use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
@@ -20,8 +20,8 @@ use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
 class Country extends Entity
 {
     use LazyLoadEntityTrait;
-	
-	
+
+
 	/**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -40,16 +40,16 @@ class Country extends Entity
         'institutions' => true,
         'users' => false
     ];
-    
+
     protected $_hidden = [
     	'domain_name',
 		'stop_words',
 		'courses'
 	];
-	
+
     // make virtual fields visible for JSON serialization
 	//protected $_virtual = ['course_count'];
-    
+
     protected function _getCourseCount() {
     	return count($this->courses);
 	}

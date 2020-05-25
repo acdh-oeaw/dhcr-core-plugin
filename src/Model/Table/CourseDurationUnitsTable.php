@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Table;
+namespace DhcrCore\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -36,7 +36,7 @@ class CourseDurationUnitsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Courses', [
+        $this->hasMany('DhcrCore.Courses', [
             'foreignKey' => 'course_duration_unit_id'
         ]);
     }
@@ -61,9 +61,9 @@ class CourseDurationUnitsTable extends Table
 
         return $validator;
     }
-	
-	
-	
+
+
+
 	public function getCourseDurationUnit($id = null) {
 		$record = $this->get($id, [
 			'contain' => [],
@@ -71,8 +71,8 @@ class CourseDurationUnitsTable extends Table
 		]);
 		return $record;
 	}
-	
-	
+
+
 	public function getCourseDurationUnits() {
 		$records = $this->find()
 			->select(['id','name'])
@@ -80,6 +80,6 @@ class CourseDurationUnitsTable extends Table
 			->toArray();
 		return $records;
 	}
- 
- 
+
+
 }

@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Table;
+namespace DhcrCore\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -23,17 +23,17 @@ use Cake\Validation\Validator;
  */
 class CourseTypesTable extends Table
 {
-	
+
 	public $query = array();
-	
+
 	public $allowedParameters = [
 		'course_count',
 		'sort_count',
 		'course_parent_type_id'
 	];
-	
-	
-	
+
+
+
 	/**
      * Initialize method
      *
@@ -43,9 +43,9 @@ class CourseTypesTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-    
-        $this->addBehavior('CounterSort');
-    
+
+        $this->addBehavior('DhcrCore.CounterSort');
+
         $this->setTable('course_types');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
@@ -93,15 +93,15 @@ class CourseTypesTable extends Table
 
         return $rules;
     }
-	
-	
+
+
 	// entry point for querystring evaluation
 	public function evaluateQuery($requestQuery = array()) {
 		$this->getCleanQuery($requestQuery);
 		$this->getFilter();
 	}
-	
-	
+
+
 	public function getCleanQuery($query = array()) {
 		foreach($query as $key => $value) {
 			if(!in_array($key, $this->allowedParameters)) {
@@ -111,8 +111,8 @@ class CourseTypesTable extends Table
 		}
 		return $this->query = $query;
 	}
-	
-	
+
+
 	public function getFilter() {
 		foreach($this->query as $key => $value) {
 			switch($key) {
@@ -133,8 +133,8 @@ class CourseTypesTable extends Table
 		}
 		return $this->query;
 	}
-	
-	
+
+
 	public function getCourseType($id = null) {
 		$record = $this->get($id, [
 			'contain' => ['CourseParentTypes'],
@@ -143,7 +143,7 @@ class CourseTypesTable extends Table
 		$record->setVirtual(['course_count','full_name']);
 		return $record;
 	}
-	
+
 	/*
 	 * Due to iterative post-processing, method returns either array of entities or array of arrays!
 	 */
@@ -152,7 +152,7 @@ class CourseTypesTable extends Table
 			->select(['id','name','course_parent_type_id','CourseParentTypes.id','CourseParentTypes.name'])
 			->contain(['CourseParentTypes'])
 			->toArray();
-		
+
         foreach($records as &$record) {
             $record->setVirtual(['full_name']);
             if(!empty($this->query['course_count']) OR !empty($this->query['sort_count']))
@@ -161,8 +161,8 @@ class CourseTypesTable extends Table
         // sort by course_count descending, using CounterSortBehavior
         if(!empty($this->query['sort_count']))
             $records = $this->sortByCourseCount($records);
-		
+
 		return $records;
 	}
- 
+
 }

@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Table;
+namespace DhcrCore\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -22,12 +22,12 @@ use Cake\Validation\Validator;
  */
 class DisciplinesTable extends Table
 {
-    
+
     public $allowedParameters = [
         'course_count',
         'sort_count'
     ];
-    
+
     /**
      * Initialize method
      *
@@ -37,9 +37,9 @@ class DisciplinesTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-    
-        $this->addBehavior('CounterSort');
-        
+
+        $this->addBehavior('DhcrCore.CounterSort');
+
         $this->setTable('disciplines');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
@@ -71,15 +71,15 @@ class DisciplinesTable extends Table
 
         return $validator;
     }
-    
-    
+
+
     // entry point for querystring evaluation
     public function evaluateQuery($requestQuery = array()) {
         $this->getCleanQuery($requestQuery);
         $this->getFilter();
     }
-    
-    
+
+
     public function getCleanQuery($query = array()) {
         foreach($query as $key => $value) {
             if(!in_array($key, $this->allowedParameters)) {
@@ -89,8 +89,8 @@ class DisciplinesTable extends Table
         }
         return $this->query = $query;
     }
-    
-    
+
+
     public function getFilter() {
         foreach($this->query as $key => $value) {
             switch($key) {
@@ -105,8 +105,8 @@ class DisciplinesTable extends Table
         }
         return $this->query;
     }
-    
-    
+
+
     public function getDiscipline($id = null) {
         $record = $this->get($id, [
             'contain' => [],
@@ -115,7 +115,7 @@ class DisciplinesTable extends Table
         $record->setVirtual(['course_count']);
         return $record;
     }
-    
+
     /*
      * Due to iterative post-processing, method returns either array of entities or array of arrays!
      */
@@ -125,14 +125,14 @@ class DisciplinesTable extends Table
             ->contain([])
             ->order(['Disciplines.name' => 'ASC'])
             ->toArray();
-        
+
         if(!empty($this->query['course_count']) OR !empty($this->query['sort_count']))
             foreach($records as &$record) $record->setVirtual(['course_count']);
         // sort by course_count descending, using CounterSortBehavior
         if(!empty($this->query['sort_count']))
             $records = $this->sortByCourseCount($records);
-        
+
         return $records;
     }
-    
+
 }

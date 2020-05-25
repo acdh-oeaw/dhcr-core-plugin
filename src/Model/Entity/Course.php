@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Entity;
+namespace DhcrCore\Model\Entity;
 
 use Cake\ORM\Entity;
 
@@ -112,7 +112,7 @@ class Course extends Entity
         'tadirah_objects' => false,
         'tadirah_techniques' => false
     ];
-	
+
 	protected $_hidden = [
 		'user_id',
 		'approval_token',

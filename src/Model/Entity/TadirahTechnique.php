@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Entity;
+namespace DhcrCore\Model\Entity;
 
 use Cake\ORM\Entity;
 use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
@@ -16,9 +16,9 @@ use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
  */
 class TadirahTechnique extends Entity
 {
-    
+
     use LazyLoadEntityTrait;
-    
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -34,12 +34,12 @@ class TadirahTechnique extends Entity
         'courses' => true,
         'tadirah_activities' => true
     ];
-	
+
 	protected $_hidden = [
 		'_joinData',
         'courses'
 	];
-    
+
     protected function _getCourseCount() {
         return count($this->courses);
     }
