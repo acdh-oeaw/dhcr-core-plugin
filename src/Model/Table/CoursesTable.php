@@ -46,7 +46,6 @@ class CoursesTable extends Table
 
 	public $sorters = array();		// sort criteria
 
-    public function foo() { return 'bar'; }
 
 
 	public $allowedFilters = [
@@ -317,11 +316,10 @@ class CoursesTable extends Table
 					}
 					break;
                 case 'online':
-                    // TODO: adjust test case to reflect this addition
-                    if($value === true || strtolower($value) === 'true' || $value === 1) {
+                    if($value === true || strtolower($value) === 'true' || $value === 1 || $value === '1') {
                         $this->query['online'] = true;
                         $conditions['Courses.online_course'] = true;
-                    }elseif($value === false || strtolower($value) === 'false' || $value === 0) {
+                    }elseif($value === false || strtolower($value) === 'false' || $value === 0 || $value === '0') {
                         $this->query['online'] = false;
                         $conditions['Courses.online_course'] = false;
                     }elseif($value === null || $value === '') {
@@ -329,11 +327,10 @@ class CoursesTable extends Table
                     }
                     break;
                 case 'recurring':
-                    // TODO: adjust test case to reflect this addition
-                    if($value === true || strtolower($value) === 'true' || $value === 1) {
+                    if($value === true || strtolower($value) === 'true' || $value === 1 || $value === '1') {
                         $this->query['recurring'] = true;
                         $conditions['Courses.recurring'] = true;
-                    }elseif($value === false || strtolower($value) === 'false' || $value === 0) {
+                    }elseif($value === false || strtolower($value) === 'false' || $value === 0 || $value === '0') {
                         $this->query['recurring'] = false;
                         $conditions['Courses.recurring'] = false;
                     }elseif($value === null || $value === '') {

@@ -1,7 +1,7 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace DhcrCore\Test\TestCase\Model\Table;
 
-use App\Model\Table\DeletionReasonsTable;
+use DhcrCore\Model\Table\DeletionReasonsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -23,8 +23,8 @@ class DeletionReasonsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.DeletionReasons',
-        'app.Courses'
+        'plugin.DhcrCore.DeletionReasons',
+        'plugin.DhcrCore.Courses'
     ];
 
     /**
@@ -70,15 +70,15 @@ class DeletionReasonsTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-	
-	
+
+
 	public function testGetDeletionReason() {
 		$record = $this->DeletionReasons->getDeletionReason(1);
 		$this->assertArrayHasKey('id', $record);
 		$this->assertArrayHasKey('name', $record);
 	}
-	
-	
+
+
 	public function testGetDeletionReasons() {
 		$this->DeletionReasons->query = [];
 		$records = $this->DeletionReasons->getDeletionReasons();
@@ -87,5 +87,5 @@ class DeletionReasonsTableTest extends TestCase
 			$this->assertArrayHasKey('name', $record);
 		}
 	}
- 
+
 }

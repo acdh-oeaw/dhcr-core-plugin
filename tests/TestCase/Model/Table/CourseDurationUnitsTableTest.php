@@ -1,7 +1,7 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace DhcrCore\Test\TestCase\Model\Table;
 
-use App\Model\Table\CourseDurationUnitsTable;
+use DhcrCore\Model\Table\CourseDurationUnitsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -23,8 +23,8 @@ class CourseDurationUnitsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.CourseDurationUnits',
-        'app.Courses'
+        'plugin.DhcrCore.CourseDurationUnits',
+        'plugin.DhcrCore.Courses'
     ];
 
     /**
@@ -70,17 +70,17 @@ class CourseDurationUnitsTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-	
-	
-	
-	
+
+
+
+
 	public function testGetCourseDurationUnit() {
 		$record = $this->CourseDurationUnits->getCourseDurationUnit(1);
 		$this->assertArrayHasKey('id', $record);
 		$this->assertArrayHasKey('name', $record);
 	}
-	
-	
+
+
 	public function testGetCourseDurationUnits() {
 		$this->CourseDurationUnits->query = [];
 		$records = $this->CourseDurationUnits->getCourseDurationUnits();
@@ -89,5 +89,5 @@ class CourseDurationUnitsTableTest extends TestCase
 			$this->assertArrayHasKey('name', $record);
 		}
 	}
- 
+
 }

@@ -1,7 +1,7 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace DhcrCore\Test\TestCase\Model\Table;
 
-use App\Model\Table\DisciplinesTable;
+use DhcrCore\Model\Table\DisciplinesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -23,9 +23,9 @@ class DisciplinesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Disciplines',
-        'app.Courses',
-        'app.CoursesDisciplines'
+        'plugin.DhcrCore.Disciplines',
+        'plugin.DhcrCore.Courses',
+        'plugin.DhcrCore.CoursesDisciplines'
     ];
 
     /**
@@ -71,8 +71,8 @@ class DisciplinesTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-    
-    
+
+
     public function testGetCleanQuery() {
         $query = [
             'foo' => 'bar',
@@ -82,8 +82,8 @@ class DisciplinesTableTest extends TestCase
         $this->assertArrayNotHasKey('foo', $query);
         $this->assertArrayHasKey('sort_count', $query);
     }
-    
-    
+
+
     public function testGetFilter() {
         $this->Disciplines->query = [
             'sort_count' => ''
@@ -94,16 +94,16 @@ class DisciplinesTableTest extends TestCase
         $this->assertArrayHasKey('course_count', $query);
         $this->assertTrue($query['course_count']);
     }
-    
-    
+
+
     public function testGetDiscipline() {
         $record = $this->Disciplines->getDiscipline(1);
         $this->assertArrayHasKey('id', $record);
         $this->assertArrayHasKey('name', $record);
         $this->assertArrayHasKey('course_count', $record);
     }
-    
-    
+
+
     public function testGetDisciplines() {
         $this->Disciplines->query = [];
         $records = $this->Disciplines->getDisciplines();
@@ -127,5 +127,5 @@ class DisciplinesTableTest extends TestCase
             $last = $record['course_count'];
         }
     }
-    
+
 }

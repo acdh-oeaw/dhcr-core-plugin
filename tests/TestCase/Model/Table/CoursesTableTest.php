@@ -1,7 +1,7 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace DhcrCore\Test\TestCase\Model\Table;
 
-use App\Model\Table\CoursesTable;
+use DhcrCore\Model\Table\CoursesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -23,22 +23,22 @@ class CoursesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Courses',
-        'app.Users',
-        'app.DeletionReasons',
-        'app.Countries',
-        'app.Cities',
-        'app.Institutions',
-        'app.CourseParentTypes',
-        'app.CourseTypes',
-        'app.Languages',
-        'app.CourseDurationUnits',
-        'app.Disciplines',
-        'app.TadirahObjects',
-        'app.TadirahTechniques',
-		'app.CoursesTadirahObjects',
-		'app.CoursesTadirahTechniques',
-		'app.CoursesDisciplines'
+        'plugin.DhcrCore.Courses',
+        'plugin.DhcrCore.Users',
+        'plugin.DhcrCore.DeletionReasons',
+        'plugin.DhcrCore.Countries',
+        'plugin.DhcrCore.Cities',
+        'plugin.DhcrCore.Institutions',
+        'plugin.DhcrCore.CourseParentTypes',
+        'plugin.DhcrCore.CourseTypes',
+        'plugin.DhcrCore.Languages',
+        'plugin.DhcrCore.CourseDurationUnits',
+        'plugin.DhcrCore.Disciplines',
+        'plugin.DhcrCore.TadirahObjects',
+        'plugin.DhcrCore.TadirahTechniques',
+		'plugin.DhcrCore.CoursesTadirahObjects',
+		'plugin.DhcrCore.CoursesTadirahTechniques',
+		'plugin.DhcrCore.CoursesDisciplines'
     ];
 
     /**
@@ -94,37 +94,40 @@ class CoursesTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-    
-    
+
+
     public function testGetCleanQuery() {
-		$this->Courses->query = [
+		$query = [
 			'foo' => 'bar',
 			'discipline_id' => '1,2, 3 , 4'
 		];
-		$query = $this->Courses->getCleanQuery();
+		$query = $this->Courses->getCleanQuery($query);
 		$this->assertArrayNotHasKey('foo', $query);
 		$this->assertArrayHasKey('discipline_id', $query);
 		$this->assertTrue(is_array($query['discipline_id']));
 	}
-    
-    
+
+
     public function testGetFilter() {
 		$this->Courses->query = [];
 		// set some values for testing
 		foreach($this->Courses->allowedFilters as $key) {
 			switch($key) {
 				case 'recent':
-					$this->Courses->query[$key] = ''; break;
+                    $this->Courses->query[$key] = ''; break;    // should evaluate true
+                case 'online':
+                case 'recurring':
+                    $this->Courses->query[$key] = ''; break;    // should not be evaluated
 				default:
 					// should be some numeric value of a foreign key, delivered as string!
 					$this->Courses->query[$key] = '3';
 			}
 		}
     	$conditions = $this->Courses->getFilter();
-		
+
     	$this->assertArrayHasKey('Courses.active', $conditions);
 		$this->assertEquals($conditions['Courses.active'], true);
-		
+
     	foreach($this->Courses->allowedFilters as $key) {
     		switch($key) {
 				case 'recent':
@@ -133,27 +136,128 @@ class CoursesTableTest extends TestCase
 					$this->assertFalse($conditions['Courses.deleted']);
 					// no test for date
 					break;
-				case 'start_date':
+                case 'online':
+                    $this->assertArrayNotHasKey('Courses.online_course', $conditions);
+                    break;
+                case 'recurring':
+                    $this->assertArrayNotHasKey('Courses.recurring', $conditions);
+                    break;
+                case 'start_date':
 					$this->assertArrayHasKey('Courses.created >=', $conditions);
 					break;
 				case 'end_date':
 					$this->assertArrayHasKey('Courses.updated <=', $conditions);
 					break;
-				case 'sort_asc':
+				case 'sort':
 					// this should not go into the conditions array!
-					$this->assertArrayNotHasKey('Courses.sort_asc', $conditions);
-					break;
-				case 'sort_desc':
-					$this->assertArrayNotHasKey('Courses.sort_desc', $conditions);
+					$this->assertArrayNotHasKey('Courses.sort', $conditions);
 					break;
     			default:
 					$this->assertArrayHasKey('Courses.'.$key, $conditions);
 					$this->assertEquals($conditions['Courses.'.$key], 3);
 			}
 		}
+
+    	// tests for online/campus presence - 1,'1',true | 0,'0',false
+        $this->Courses->query = [];
+        $this->Courses->query['online'] = 1;
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.online_course', $conditions);
+        $this->assertTrue($conditions['Courses.online_course']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['online'] = 0;
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.online_course', $conditions);
+        $this->assertFalse($conditions['Courses.online_course']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['online'] = 'TRUE';
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.online_course', $conditions);
+        $this->assertTrue($conditions['Courses.online_course']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['online'] = 'FALSE';
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.online_course', $conditions);
+        $this->assertFalse($conditions['Courses.online_course']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['online'] = '1';
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.online_course', $conditions);
+        $this->assertTrue($conditions['Courses.online_course']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['online'] = '0';
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.online_course', $conditions);
+        $this->assertFalse($conditions['Courses.online_course']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['online'] = true;
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.online_course', $conditions);
+        $this->assertTrue($conditions['Courses.online_course']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['online'] = false;
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.online_course', $conditions);
+        $this->assertFalse($conditions['Courses.online_course']);
+
+        // tests for recurring parameter, same as online_course
+        $this->Courses->query = [];
+        $this->Courses->query['recurring'] = 1;
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.recurring', $conditions);
+        $this->assertTrue($conditions['Courses.recurring']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['recurring'] = 0;
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.recurring', $conditions);
+        $this->assertFalse($conditions['Courses.recurring']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['recurring'] = 'TRUE';
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.recurring', $conditions);
+        $this->assertTrue($conditions['Courses.recurring']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['recurring'] = 'FALSE';
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.recurring', $conditions);
+        $this->assertFalse($conditions['Courses.recurring']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['recurring'] = '1';
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.recurring', $conditions);
+        $this->assertTrue($conditions['Courses.recurring']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['recurring'] = '0';
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.recurring', $conditions);
+        $this->assertFalse($conditions['Courses.recurring']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['recurring'] = true;
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.recurring', $conditions);
+        $this->assertTrue($conditions['Courses.recurring']);
+
+        $this->Courses->query = [];
+        $this->Courses->query['recurring'] = false;
+        $conditions = $this->Courses->getFilter();
+        $this->assertArrayHasKey('Courses.recurring', $conditions);
+        $this->assertFalse($conditions['Courses.recurring']);
 	}
-	
-	
+
+
 	public function testGetJoins() {
 		$this->Courses->query = [
 			'discipline_id' => [],
@@ -166,8 +270,8 @@ class CoursesTableTest extends TestCase
 			$this->assertArrayHasKey('conditions', $join);
 		}
 	}
-	
-	
+
+
 	public function testGetSorters() {
     	$this->Courses->query = [
     		'sort' => ['name','Cities.name:desc','Cities.foo']
@@ -182,8 +286,8 @@ class CoursesTableTest extends TestCase
     	$this->assertEquals('DESC', $sorters['Cities.name']);
     	$this->assertArrayNotHasKey('Cities.foo', $sorters);
 	}
-	
-	
+
+
 	public function testGetResults() {
  		$query = [
  			'country_id' => '1',
@@ -191,29 +295,29 @@ class CoursesTableTest extends TestCase
 		];
     	$this->Courses->evaluateQuery($query);
     	$courses = $this->Courses->getResults();
-    	
+
  		$this->assertNotEmpty($courses);
-		
+
 		$query = [
 			'country_id' => '2',
 			'discipline_id' => [1,2]
 		];
 		$this->Courses->evaluateQuery($query);
 		$courses = $this->Courses->getResults();
-		
+
 		$this->assertEmpty($courses);
-		
+
 		$query = [
 			'country_id' => '1',
 			'discipline_id' => [3,2]
 		];
 		$this->Courses->evaluateQuery($query);
 		$courses = $this->Courses->getResults();
-		
+
 		$this->assertEmpty($courses);
 	}
-	
-	
+
+
 	public function testCountResults() {
 		$query = [
 			'country_id' => '1',
@@ -221,7 +325,7 @@ class CoursesTableTest extends TestCase
 		];
 		$this->Courses->evaluateQuery($query);
 		$result = $this->Courses->countResults();
-		
+
 		$this->assertEquals(1, $result);
 	}
 }

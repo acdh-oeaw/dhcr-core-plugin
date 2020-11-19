@@ -1,7 +1,7 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace DhcrCore\Test\TestCase\Model\Table;
 
-use App\Model\Table\InstitutionsTable;
+use DhcrCore\Model\Table\InstitutionsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -23,11 +23,11 @@ class InstitutionsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Institutions',
-        'app.Cities',
-        'app.Countries',
-        'app.Courses',
-        'app.Users'
+        'plugin.DhcrCore.Institutions',
+        'plugin.DhcrCore.Cities',
+        'plugin.DhcrCore.Countries',
+        'plugin.DhcrCore.Courses',
+        'plugin.DhcrCore.Users'
     ];
 
     /**
@@ -83,9 +83,9 @@ class InstitutionsTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-	
-	
-	
+
+
+
 	public function testGetCleanQuery() {
 		$query = [
 			'foo' => 'bar',
@@ -101,8 +101,8 @@ class InstitutionsTableTest extends TestCase
 		$this->assertArrayHasKey('country_id', $query);
 		$this->assertArrayHasKey('city_id', $query);
 	}
-	
-	
+
+
 	public function testGetFilter() {
 		$this->Institutions->query = [
 			'sort_count' => ''
@@ -112,41 +112,41 @@ class InstitutionsTableTest extends TestCase
 		$this->assertTrue($query['sort_count']);
 		$this->assertArrayHasKey('course_count', $query);
 		$this->assertTrue($query['course_count']);
-		
+
 		$this->Institutions->query = ['group' => ''];
 		$query = $this->Institutions->getFilter();
 		$this->assertArrayHasKey('group', $query);
 		$this->assertTrue($query['group']);
-		
+
 		$this->Institutions->query = ['group' => '', 'country_id' => '2'];
 		$query = $this->Institutions->getFilter();
-		$this->assertArrayNotHasKey('group', $query);
+		$this->assertArrayHasKey('group', $query);
 		$this->assertArrayHasKey('country_id', $query);
 		$this->assertTrue(ctype_digit($query['country_id']));
-		
+
 		$this->Institutions->query = ['group' => '', 'country_id' => '1,2'];
 		$query = $this->Institutions->getFilter();
 		$this->assertArrayHasKey('group', $query);
 		$this->assertArrayNotHasKey('country_id', $query);
-		
+
 		$this->Institutions->query = ['group' => '', 'city_id' => '2'];
 		$query = $this->Institutions->getFilter();
-		$this->assertArrayNotHasKey('group', $query);
+		$this->assertArrayHasKey('group', $query);
 		$this->assertArrayHasKey('city_id', $query);
 		$this->assertTrue(ctype_digit($query['city_id']));
-		
+
 		$this->Institutions->query = ['country_id' => '3', 'city_id' => '2'];
 		$query = $this->Institutions->getFilter();
 		$this->assertArrayNotHasKey('country_id', $query);
 		$this->assertArrayHasKey('city_id', $query);
 	}
-	
-	
+
+
 	public function testGetInstitution() {
 		$institution = $this->Institutions->getInstitution(1);
 		$this->__testInstitution($institution);
 	}
-	
+
 	private function __testInstitution($institution = []) {
 		$this->assertArrayHasKey('course_count', $institution);
 		$this->assertArrayHasKey('id', $institution);
@@ -158,8 +158,8 @@ class InstitutionsTableTest extends TestCase
 		$this->assertArrayHasKey('city_id', $institution);
 		$this->assertArrayHasKey('name', $institution['city']);
 	}
-	
-	
+
+
 	public function testGetInstitutions() {
 		$this->Institutions->query = ['course_count' => true];
 		$institutions = $this->Institutions->getInstitutions();
