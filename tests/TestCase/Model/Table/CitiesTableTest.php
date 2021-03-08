@@ -1,7 +1,7 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace DhcrCore\Test\TestCase\Model\Table;
 
-use App\Model\Table\CitiesTable;
+use DhcrCore\Model\Table\CitiesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -23,10 +23,10 @@ class CitiesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Cities',
-        'app.Countries',
-        'app.Courses',
-        'app.Institutions'
+        'plugin.DhcrCore.Cities',
+        'plugin.DhcrCore.Countries',
+        'plugin.DhcrCore.Courses',
+        'plugin.DhcrCore.Institutions'
     ];
 
     /**
@@ -82,8 +82,8 @@ class CitiesTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-	
-	
+
+
 	public function testGetCleanQuery() {
 		$query = [
 			'foo' => 'bar',
@@ -97,8 +97,8 @@ class CitiesTableTest extends TestCase
 		$this->assertArrayHasKey('group', $query);
 		$this->assertArrayHasKey('country_id', $query);
 	}
-	
-	
+
+
 	public function testGetFilter() {
 		$this->Cities->query = [
 			'sort_count' => ''
@@ -108,30 +108,31 @@ class CitiesTableTest extends TestCase
 		$this->assertTrue($query['sort_count']);
 		$this->assertArrayHasKey('course_count', $query);
 		$this->assertTrue($query['course_count']);
-		
+
 		$this->Cities->query = ['group' => ''];
 		$query = $this->Cities->getFilter();
 		$this->assertArrayHasKey('group', $query);
 		$this->assertTrue($query['group']);
-		
+
 		$this->Cities->query = ['group' => '', 'country_id' => '2'];
 		$query = $this->Cities->getFilter();
-		$this->assertArrayNotHasKey('group', $query);
+		$this->assertArrayHasKey('group', $query);
 		$this->assertArrayHasKey('country_id', $query);
 		$this->assertTrue(ctype_digit($query['country_id']));
-		
+
 		$this->Cities->query = ['group' => '', 'country_id' => '1,2'];
 		$query = $this->Cities->getFilter();
 		$this->assertArrayHasKey('group', $query);
+		// multiple country ids are not supported, thus grouping is allowed
 		$this->assertArrayNotHasKey('country_id', $query);
 	}
-	
-	
+
+
 	public function testGetCity() {
 		$city = $this->Cities->getCity(1);
 		$this->__testCity($city);
 	}
-	
+
 	private function __testCity($city = []) {
 		$this->assertArrayHasKey('course_count', $city);
 		$this->assertArrayHasKey('id', $city);
@@ -140,8 +141,8 @@ class CitiesTableTest extends TestCase
 		$this->assertArrayHasKey('country', $city);
 		$this->assertArrayHasKey('name', $city['country']);
 	}
-	
-	
+
+
 	public function testGetCities() {
 		$this->Cities->query = ['course_count' => true];
     	$cities = $this->Cities->getCities();
@@ -175,5 +176,5 @@ class CitiesTableTest extends TestCase
 			}
 		}
 	}
- 
+
 }

@@ -1,7 +1,7 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace DhcrCore\Test\TestCase\Model\Table;
 
-use App\Model\Table\CountriesTable;
+use DhcrCore\Model\Table\CountriesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -23,11 +23,11 @@ class CountriesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Countries',
-        'app.Cities',
-        'app.Courses',
-        'app.Institutions',
-        'app.Users'
+        'plugin.DhcrCore.Countries',
+        'plugin.DhcrCore.Cities',
+        'plugin.DhcrCore.Courses',
+        'plugin.DhcrCore.Institutions',
+        'plugin.DhcrCore.Users'
     ];
 
     /**
@@ -73,8 +73,8 @@ class CountriesTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-	
-	
+
+
 	public function testGetCleanQuery() {
 		$query = [
 			'foo' => 'bar',
@@ -84,8 +84,8 @@ class CountriesTableTest extends TestCase
 		$this->assertArrayNotHasKey('foo', $query);
 		$this->assertArrayHasKey('sort_count', $query);
 	}
-	
-	
+
+
 	public function testGetFilter() {
 		$this->Countries->query = [
 			'sort_count' => ''
@@ -96,14 +96,14 @@ class CountriesTableTest extends TestCase
 		$this->assertArrayHasKey('course_count', $query);
 		$this->assertTrue($query['course_count']);
 	}
-    
-    
+
+
     public function testGetCountry() {
     	$country = $this->Countries->getCountry(1);
     	$this->assertArrayHasKey('course_count', $country);
 	}
-	
-	
+
+
 	public function testGetCountries() {
  		$this->Countries->query = ['course_count' => true];
     	$countries = $this->Countries->getCountries();
@@ -125,7 +125,7 @@ class CountriesTableTest extends TestCase
 			$last = $country['course_count'];
 		}
 	}
- 
- 
- 
+
+
+
 }

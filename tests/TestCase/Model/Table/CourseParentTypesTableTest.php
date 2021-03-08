@@ -1,7 +1,7 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace DhcrCore\Test\TestCase\Model\Table;
 
-use App\Model\Table\CourseParentTypesTable;
+use DhcrCore\Model\Table\CourseParentTypesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -23,9 +23,9 @@ class CourseParentTypesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.CourseParentTypes',
-        'app.CourseParentTypes',
-        'app.Courses'
+        'plugin.DhcrCore.CourseParentTypes',
+        'plugin.DhcrCore.CourseParentTypes',
+        'plugin.DhcrCore.Courses'
     ];
 
     /**
@@ -71,8 +71,8 @@ class CourseParentTypesTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-    
-    
+
+
     public function testGetCleanQuery() {
         $query = [
             'foo' => 'bar',
@@ -82,8 +82,8 @@ class CourseParentTypesTableTest extends TestCase
         $this->assertArrayNotHasKey('foo', $query);
         $this->assertArrayHasKey('sort_count', $query);
     }
-    
-    
+
+
     public function testGetFilter() {
         $this->CourseParentTypes->query = [
             'sort_count' => ''
@@ -94,16 +94,16 @@ class CourseParentTypesTableTest extends TestCase
         $this->assertArrayHasKey('course_count', $query);
         $this->assertTrue($query['course_count']);
     }
-    
-    
+
+
     public function testGetCourseParentType() {
         $record = $this->CourseParentTypes->getCourseParentType(1);
         $this->assertArrayHasKey('id', $record);
         $this->assertArrayHasKey('name', $record);
         $this->assertArrayHasKey('course_count', $record);
     }
-    
-    
+
+
     public function testGetCourseParentTypes() {
         $this->CourseParentTypes->query = [];
         $records = $this->CourseParentTypes->getCourseParentTypes();
@@ -127,5 +127,5 @@ class CourseParentTypesTableTest extends TestCase
             $last = $record['course_count'];
         }
     }
-    
+
 }
