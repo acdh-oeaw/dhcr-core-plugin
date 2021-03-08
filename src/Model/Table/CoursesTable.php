@@ -384,7 +384,7 @@ class CoursesTable extends Table
 					$joins[] = [
 						'assoc' => 'CoursesTadirahTechniques',
 						'conditions' => [
-							'CoursesTadirahTechniques.tadirah_techniques_id IN' => $value
+							'CoursesTadirahTechniques.tadirah_technique_id IN' => $value
 						]
 					];
 			}
