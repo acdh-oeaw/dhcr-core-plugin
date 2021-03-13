@@ -144,8 +144,17 @@ class CountriesTable extends Table
 			->order(['Countries.name' => 'ASC'])
 			->toArray();
 
-        if(!empty($this->query['course_count']) OR !empty($this->query['sort_count']))
+        if(!empty($this->query['course_count']) OR !empty($this->query['sort_count'])) {
+            $this->hasMany('DhcrCore.Courses', [
+                'foreignKey' => 'country_id',
+                'conditions' => [
+                    'Courses.active' => true,
+                    'Courses.deleted' => false,
+                    'Courses.updated >' => date('Y-m-d H:i:s', time() - 60*60*24*489)
+                ]
+            ]);
             foreach($countries as &$country) $country->setVirtual(['course_count']);
+        }
         // sort by course_count descending, using CounterSortBehavior
         if(!empty($this->query['sort_count']))
             $countries = $this->sortByCourseCount($countries);
