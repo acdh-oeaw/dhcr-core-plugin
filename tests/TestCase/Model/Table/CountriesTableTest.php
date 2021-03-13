@@ -108,7 +108,7 @@ class CountriesTableTest extends TestCase
  		$this->Countries->query = ['course_count' => true];
     	$countries = $this->Countries->getCountries();
  		foreach($countries as $country) {
- 			$this->assertNotEmpty($country['course_count']);
+ 			$this->assertNotNull($country['course_count']);
 		}
 		$this->Countries->query = [];
 		$countries = $this->Countries->getCountries();
