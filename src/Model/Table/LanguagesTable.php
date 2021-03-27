@@ -134,7 +134,7 @@ class LanguagesTable extends Table
     public function getLanguages() {
         if(!empty($this->query['count_recent'])) {
             $this->hasMany('DhcrCore.Courses', [
-                'foreignKey' => 'language',
+                'foreignKey' => 'language_id',
                 'conditions' => [
                     'Courses.active' => true,
                     'Courses.deleted' => false,
