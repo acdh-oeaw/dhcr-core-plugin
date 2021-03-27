@@ -1,6 +1,7 @@
 <?php
 namespace DhcrCore\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -25,7 +26,8 @@ class DisciplinesTable extends Table
 
     public $allowedParameters = [
         'course_count',
-        'sort_count'
+        'sort_count',
+        'count_recent'
     ];
 
     /**
@@ -96,9 +98,10 @@ class DisciplinesTable extends Table
             switch($key) {
                 case 'sort_count':
                 case 'course_count':
+                case 'count_recent':
                     if($value == true || $value === '')
                         $this->query[$key] = true;
-                    if($key == 'sort_count' AND $this->query[$key])
+                    if(($key == 'sort_count' OR $key == 'count_recent') AND $this->query[$key])
                         $this->query['course_count'] = true;
                     break;
             }
@@ -108,6 +111,18 @@ class DisciplinesTable extends Table
 
 
     public function getDiscipline($id = null) {
+        if(!empty($this->query['count_recent'])) {
+            $this->belongsToMany('Courses', [
+                'foreignKey' => 'discipline_id',
+                'targetForeignKey' => 'course_id',
+                'joinTable' => 'courses_disciplines',
+                'conditions' => [
+                    'Courses.active' => true,
+                    'Courses.deleted' => false,
+                    'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
+                ]
+            ]);
+        }
         $record = $this->get($id, [
             'contain' => [],
             'fields' => ['id','name']
@@ -120,13 +135,25 @@ class DisciplinesTable extends Table
      * Due to iterative post-processing, method returns either array of entities or array of arrays!
      */
     public function getDisciplines() {
+        if(!empty($this->query['count_recent'])) {
+            $this->belongsToMany('Courses', [
+                'foreignKey' => 'discipline_id',
+                'targetForeignKey' => 'course_id',
+                'joinTable' => 'courses_disciplines',
+                'conditions' => [
+                    'Courses.active' => true,
+                    'Courses.deleted' => false,
+                    'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
+                ]
+            ]);
+        }
         $records = $this->find()
             ->select(['id','name'])
             ->contain([])
             ->order(['Disciplines.name' => 'ASC'])
             ->toArray();
 
-        if(!empty($this->query['course_count']) OR !empty($this->query['sort_count']))
+        if(!empty($this->query['course_count']))
             foreach($records as &$record) $record->setVirtual(['course_count']);
         // sort by course_count descending, using CounterSortBehavior
         if(!empty($this->query['sort_count']))

@@ -312,7 +312,7 @@ class CoursesTable extends Table
 					if($value == true || $value === '') {
 						$this->query['recent'] = true;
 						$conditions['Courses.deleted'] = false;
-						$conditions['Courses.updated >'] = date('Y-m-d H:i:s', time() - 60*60*24*489);
+						$conditions['Courses.updated >'] = date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'));
 					}
 					break;
                 case 'online':

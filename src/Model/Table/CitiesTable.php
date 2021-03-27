@@ -1,6 +1,7 @@
 <?php
 namespace DhcrCore\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -32,7 +33,8 @@ class CitiesTable extends Table
 		'course_count',
 		'sort_count',
 		'group',
-		'country_id'
+		'country_id',
+        'count_recent'
 	];
 
 
@@ -123,10 +125,11 @@ class CitiesTable extends Table
 			switch($key) {
 				case 'sort_count':
 				case 'course_count':
+                case 'count_recent':
 				case 'group':
 					if($value == true || $value === '')
 						$this->query[$key] = true;
-					if($key == 'sort_count' AND $this->query[$key])
+                    if(($key == 'sort_count' OR $key == 'count_recent') AND $this->query[$key])
 						$this->query['course_count'] = true;
 					break;
 				case 'country_id':
@@ -142,7 +145,17 @@ class CitiesTable extends Table
 
 
 	public function getCity($id = null) {
-		$city = $this->get($id, [
+        if(!empty($this->query['count_recent'])) {
+            $this->hasMany('DhcrCore.Courses', [
+                'foreignKey' => 'city_id',
+                'conditions' => [
+                    'Courses.active' => true,
+                    'Courses.deleted' => false,
+                    'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
+                ]
+            ]);
+        }
+        $city = $this->get($id, [
 			'contain' => ['Countries'],
 			'fields' => ['id','name','country_id','Countries.id','Countries.name']
 		]);
@@ -154,7 +167,17 @@ class CitiesTable extends Table
 	 * Due to iterative post-processing, method returns either array of entities or array of arrays!
 	 */
 	public function getCities() {
-		$cities = $this->find()
+        if(!empty($this->query['count_recent'])) {
+            $this->hasMany('DhcrCore.Courses', [
+                'foreignKey' => 'city_id',
+                'conditions' => [
+                    'Courses.active' => true,
+                    'Courses.deleted' => false,
+                    'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
+                ]
+            ]);
+        }
+	    $cities = $this->find()
 			->select(['id','name','country_id','Countries.id','Countries.name'])
 			->contain(['Countries'])
 			->order(['Cities.name' => 'ASC']);
@@ -164,7 +187,7 @@ class CitiesTable extends Table
 		// calling toArray directly does not change the object by reference - assignment required
 		$cities = $cities->toArray();
 
-		if(!empty($this->query['course_count']) OR !empty($this->query['sort_count']))
+		if(!empty($this->query['course_count']))
             foreach($cities as &$city) $city->setVirtual(['course_count']);
         // sort by course_count descending, using DhcrCore.CounterSortBehavior
         if(!empty($this->query['sort_count']))

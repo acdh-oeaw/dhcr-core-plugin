@@ -1,6 +1,7 @@
 <?php
 namespace DhcrCore\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -29,7 +30,8 @@ class CourseTypesTable extends Table
 	public $allowedParameters = [
 		'course_count',
 		'sort_count',
-		'course_parent_type_id'
+		'course_parent_type_id',
+        'count_recent'
 	];
 
 
@@ -118,9 +120,10 @@ class CourseTypesTable extends Table
 			switch($key) {
 				case 'sort_count':
 				case 'course_count':
+                case 'count_recent':
 					if($value == true || $value === '')
 						$this->query[$key] = true;
-					if($key == 'sort_count' AND $this->query[$key])
+					if(($key == 'sort_count' OR $key == 'count_recent') AND $this->query[$key])
 						$this->query['course_count'] = true;
 					break;
 				case 'course_parent_type_id':
@@ -136,7 +139,17 @@ class CourseTypesTable extends Table
 
 
 	public function getCourseType($id = null) {
-		$record = $this->get($id, [
+        if(!empty($this->query['count_recent'])) {
+            $this->hasMany('DhcrCore.Courses', [
+                'foreignKey' => 'course_type_id',
+                'conditions' => [
+                    'Courses.active' => true,
+                    'Courses.deleted' => false,
+                    'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
+                ]
+            ]);
+        }
+        $record = $this->get($id, [
 			'contain' => ['CourseParentTypes'],
 			'fields' => ['id','name','course_parent_type_id','CourseParentTypes.id','CourseParentTypes.name']
 		]);
@@ -148,14 +161,24 @@ class CourseTypesTable extends Table
 	 * Due to iterative post-processing, method returns either array of entities or array of arrays!
 	 */
 	public function getCourseTypes() {
-		$records = $this->find()
+        if(!empty($this->query['count_recent'])) {
+            $this->hasMany('DhcrCore.Courses', [
+                'foreignKey' => 'course_type_id',
+                'conditions' => [
+                    'Courses.active' => true,
+                    'Courses.deleted' => false,
+                    'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
+                ]
+            ]);
+        }
+	    $records = $this->find()
 			->select(['id','name','course_parent_type_id','CourseParentTypes.id','CourseParentTypes.name'])
 			->contain(['CourseParentTypes'])
 			->toArray();
 
         foreach($records as &$record) {
             $record->setVirtual(['full_name']);
-            if(!empty($this->query['course_count']) OR !empty($this->query['sort_count']))
+            if(!empty($this->query['course_count']))
                 $record->setVirtual(['course_count','full_name']);
         }
         // sort by course_count descending, using CounterSortBehavior
