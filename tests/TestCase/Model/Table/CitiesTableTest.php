@@ -109,6 +109,11 @@ class CitiesTableTest extends TestCase
 		$this->assertArrayHasKey('course_count', $query);
 		$this->assertTrue($query['course_count']);
 
+        $this->Cities->query = ['count_recent' => true];
+        $this->Cities->getFilter();
+        $this->assertTrue($this->Cities->query['count_recent']);
+        $this->assertTrue($this->Cities->query['course_count']);
+
 		$this->Cities->query = ['group' => ''];
 		$query = $this->Cities->getFilter();
 		$this->assertArrayHasKey('group', $query);
@@ -175,6 +180,6 @@ class CitiesTableTest extends TestCase
 				$this->assertNotEmpty($city['id']);
 			}
 		}
-	}
+    }
 
 }

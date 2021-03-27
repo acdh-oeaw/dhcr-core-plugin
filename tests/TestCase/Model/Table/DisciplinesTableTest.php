@@ -93,6 +93,11 @@ class DisciplinesTableTest extends TestCase
         $this->assertTrue($query['sort_count']);
         $this->assertArrayHasKey('course_count', $query);
         $this->assertTrue($query['course_count']);
+
+        $this->Disciplines->query = ['count_recent' => true];
+        $this->Disciplines->getFilter();
+        $this->assertTrue($this->Disciplines->query['count_recent']);
+        $this->assertTrue($this->Disciplines->query['course_count']);
     }
 
 

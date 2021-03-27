@@ -92,6 +92,11 @@ class LanguagesTableTest extends TestCase
         $this->assertTrue($query['sort_count']);
         $this->assertArrayHasKey('course_count', $query);
         $this->assertTrue($query['course_count']);
+
+        $this->Languages->query = ['count_recent' => true];
+        $this->Languages->getFilter();
+        $this->assertTrue($this->Languages->query['count_recent']);
+        $this->assertTrue($this->Languages->query['course_count']);
     }
 
 

@@ -93,6 +93,11 @@ class TadirahObjectsTableTest extends TestCase
         $this->assertTrue($query['sort_count']);
         $this->assertArrayHasKey('course_count', $query);
         $this->assertTrue($query['course_count']);
+
+        $this->TadirahObjects->query = ['count_recent' => true];
+        $this->TadirahObjects->getFilter();
+        $this->assertTrue($this->TadirahObjects->query['count_recent']);
+        $this->assertTrue($this->TadirahObjects->query['course_count']);
     }
 
 

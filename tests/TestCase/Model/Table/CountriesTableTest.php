@@ -95,6 +95,11 @@ class CountriesTableTest extends TestCase
 		$this->assertTrue($query['sort_count']);
 		$this->assertArrayHasKey('course_count', $query);
 		$this->assertTrue($query['course_count']);
+
+        $this->Countries->query = ['count_recent' => true];
+        $this->Countries->getFilter();
+        $this->assertTrue($this->Countries->query['count_recent']);
+        $this->assertTrue($this->Countries->query['course_count']);
 	}
 
 
@@ -124,6 +129,12 @@ class CountriesTableTest extends TestCase
 				$this->assertTrue($last > $country['course_count']);
 			$last = $country['course_count'];
 		}
+
+		// TODO: add an expired course for the test to succeed
+        /*$countries = $this->Countries->getCountries();
+        $this->Countries->query = ['course_count' => true,'count_recent' => false];
+        $_countries = $this->Countries->getCountries();
+        $this->assertNotEquals($countries, $_countries);*/
 	}
 
 

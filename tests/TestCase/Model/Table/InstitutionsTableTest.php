@@ -113,6 +113,11 @@ class InstitutionsTableTest extends TestCase
 		$this->assertArrayHasKey('course_count', $query);
 		$this->assertTrue($query['course_count']);
 
+        $this->Institutions->query = ['count_recent' => true];
+        $this->Institutions->getFilter();
+        $this->assertTrue($this->Institutions->query['count_recent']);
+        $this->assertTrue($this->Institutions->query['course_count']);
+
 		$this->Institutions->query = ['group' => ''];
 		$query = $this->Institutions->getFilter();
 		$this->assertArrayHasKey('group', $query);

@@ -103,6 +103,11 @@ class CourseTypesTableTest extends TestCase
 		$this->assertTrue($query['sort_count']);
 		$this->assertArrayHasKey('course_count', $query);
 		$this->assertTrue($query['course_count']);
+
+        $this->CourseTypes->query = ['count_recent' => true];
+        $this->CourseTypes->getFilter();
+        $this->assertTrue($this->CourseTypes->query['count_recent']);
+        $this->assertTrue($this->CourseTypes->query['course_count']);
 	}
 
 

@@ -93,6 +93,11 @@ class CourseParentTypesTableTest extends TestCase
         $this->assertTrue($query['sort_count']);
         $this->assertArrayHasKey('course_count', $query);
         $this->assertTrue($query['course_count']);
+
+        $this->CourseParentTypes->query = ['count_recent' => true];
+        $this->CourseParentTypes->getFilter();
+        $this->assertTrue($this->CourseParentTypes->query['count_recent']);
+        $this->assertTrue($this->CourseParentTypes->query['course_count']);
     }
 
 
