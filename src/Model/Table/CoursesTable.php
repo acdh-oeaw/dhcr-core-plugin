@@ -90,7 +90,7 @@ class CoursesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config) : void
     {
         parent::initialize($config);
 
@@ -148,7 +148,7 @@ class CoursesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator) : Validator
     {
         $validator
             ->integer('id')
@@ -258,7 +258,7 @@ class CoursesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules) : RulesChecker
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['deletion_reason_id'], 'DeletionReasons'));
@@ -396,10 +396,10 @@ class CoursesTable extends Table
     	if(!empty($this->query['sort'])) {
     		$value = $this->query['sort'];
 			if(!is_array($value)) {
-				$this->__getValidSorter($this->sorters, $value);
+				$this->__getValidSorter($value, $this->sorters);
 			}else{
 				foreach($value as $sort) {
-					$this->__getValidSorter($this->sorters, $sort);
+					$this->__getValidSorter($sort, $this->sorters);
 				}
 			}
 		}
@@ -407,7 +407,7 @@ class CoursesTable extends Table
 	}
 
 	// do some checking for contained models, existing fields and assume defaults...
-	private function __getValidSorter(&$sorters = array(), $value) {
+	private function __getValidSorter($value, &$sorters = array()) {
 		$direction = 'ASC';
 		$sortkey = $value;
     	if(strpos($value, ':') !== false) {
