@@ -33,7 +33,7 @@ class DisciplinesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Disciplines') ? [] : ['className' => DisciplinesTable::class];
@@ -45,7 +45,7 @@ class DisciplinesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Disciplines);
 
