@@ -28,7 +28,7 @@ class CourseDurationUnitsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config) : void
+    public function init() : voidialize(array $config) : void
     {
         parent::initialize($config);
 
