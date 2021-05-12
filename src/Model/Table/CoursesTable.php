@@ -127,15 +127,6 @@ class CoursesTable extends Table
         $this->belongsTo('DhcrCore.CourseDurationUnits', [
             'foreignKey' => 'course_duration_unit_id'
         ]);
-        $this->hasMany('DhcrCore.CoursesDisciplines', [
-            'foreignKey' => 'course_id'
-        ]);
-        $this->hasMany('DhcrCore.CoursesTadirahObjects', [
-            'foreignKey' => 'course_id'
-        ]);
-        $this->hasMany('DhcrCore.CoursesTadirahTechniques', [
-            'foreignKey' => 'course_id'
-        ]);
 
         $this->belongsToMany('DhcrCore.Disciplines');
         $this->belongsToMany('DhcrCore.TadirahTechniques');

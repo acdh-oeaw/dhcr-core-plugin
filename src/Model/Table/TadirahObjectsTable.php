@@ -114,7 +114,7 @@ class TadirahObjectsTable extends Table
 
     public function getTadirahObject($id = null) {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'tadirah_object_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_tadirah_objects',
@@ -138,7 +138,7 @@ class TadirahObjectsTable extends Table
      */
     public function getTadirahObjects() {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'tadirah_object_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_tadirah_objects',

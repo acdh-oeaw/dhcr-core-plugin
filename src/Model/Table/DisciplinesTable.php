@@ -112,7 +112,7 @@ class DisciplinesTable extends Table
 
     public function getDiscipline($id = null) {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'discipline_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_disciplines',
@@ -136,7 +136,7 @@ class DisciplinesTable extends Table
      */
     public function getDisciplines() {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'discipline_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_disciplines',

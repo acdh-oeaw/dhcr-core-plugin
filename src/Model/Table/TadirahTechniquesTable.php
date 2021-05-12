@@ -120,7 +120,7 @@ class TadirahTechniquesTable extends Table
 
     public function getTadirahTechnique($id = null) {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'tadirah_technique_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_tadirah_techniques',
@@ -144,7 +144,7 @@ class TadirahTechniquesTable extends Table
      */
     public function getTadirahTechniques() {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'tadirah_technique_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_tadirah_techniques',
