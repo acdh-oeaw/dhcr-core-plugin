@@ -360,6 +360,7 @@ class CoursesTable extends Table
 							'CoursesDisciplines.discipline_id IN' => $value
 						]
 					];
+                    $this->hasMany('CoursesDisciplines');
 					break;
 				case 'tadirah_object_id':
 					$joins[] = [

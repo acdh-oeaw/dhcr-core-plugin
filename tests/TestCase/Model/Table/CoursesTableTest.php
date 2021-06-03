@@ -315,6 +315,15 @@ class CoursesTableTest extends TestCase
 		$courses = $this->Courses->getResults();
 
 		$this->assertEmpty($courses);
+
+        $query = [
+            'country_id' => '1',
+            'tadirah_technique_id' => [3,2]
+        ];
+        $this->Courses->evaluateQuery($query);
+        $courses = $this->Courses->getResults();
+
+        $this->assertEmpty($courses);
 	}
 
 
