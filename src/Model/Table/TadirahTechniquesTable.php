@@ -51,11 +51,6 @@ class TadirahTechniquesTable extends Table
             'targetForeignKey' => 'course_id',
             'joinTable' => 'courses_tadirah_techniques'
         ]);
-        $this->belongsToMany('TadirahActivities', [
-            'foreignKey' => 'tadirah_technique_id',
-            'targetForeignKey' => 'tadirah_activity_id',
-            'joinTable' => 'tadirah_activities_tadirah_techniques'
-        ]);
     }
 
     /**
