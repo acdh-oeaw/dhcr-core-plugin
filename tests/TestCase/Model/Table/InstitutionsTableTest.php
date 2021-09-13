@@ -35,7 +35,7 @@ class InstitutionsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Institutions') ? [] : ['className' => InstitutionsTable::class];
@@ -47,7 +47,7 @@ class InstitutionsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Institutions);
 

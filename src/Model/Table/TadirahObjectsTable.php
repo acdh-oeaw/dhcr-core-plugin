@@ -35,7 +35,7 @@ class TadirahObjectsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config) : void
     {
         parent::initialize($config);
 
@@ -58,7 +58,7 @@ class TadirahObjectsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator) : Validator
     {
         $validator
             ->integer('id')
@@ -114,7 +114,7 @@ class TadirahObjectsTable extends Table
 
     public function getTadirahObject($id = null) {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'tadirah_object_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_tadirah_objects',
@@ -138,7 +138,7 @@ class TadirahObjectsTable extends Table
      */
     public function getTadirahObjects() {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'tadirah_object_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_tadirah_objects',

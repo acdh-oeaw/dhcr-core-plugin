@@ -46,7 +46,7 @@ class CoursesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Courses') ? [] : ['className' => CoursesTable::class];
@@ -58,7 +58,7 @@ class CoursesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Courses);
 
@@ -315,6 +315,15 @@ class CoursesTableTest extends TestCase
 		$courses = $this->Courses->getResults();
 
 		$this->assertEmpty($courses);
+
+        $query = [
+            'country_id' => '1',
+            'tadirah_technique_id' => [3,2]
+        ];
+        $this->Courses->evaluateQuery($query);
+        $courses = $this->Courses->getResults();
+
+        $this->assertEmpty($courses);
 	}
 
 

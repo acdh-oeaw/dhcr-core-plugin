@@ -36,7 +36,7 @@ class TadirahTechniquesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config) : void
     {
         parent::initialize($config);
 
@@ -51,11 +51,6 @@ class TadirahTechniquesTable extends Table
             'targetForeignKey' => 'course_id',
             'joinTable' => 'courses_tadirah_techniques'
         ]);
-        $this->belongsToMany('TadirahActivities', [
-            'foreignKey' => 'tadirah_technique_id',
-            'targetForeignKey' => 'tadirah_activity_id',
-            'joinTable' => 'tadirah_activities_tadirah_techniques'
-        ]);
     }
 
     /**
@@ -64,7 +59,7 @@ class TadirahTechniquesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator) : Validator
     {
         $validator
             ->integer('id')
@@ -120,7 +115,7 @@ class TadirahTechniquesTable extends Table
 
     public function getTadirahTechnique($id = null) {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'tadirah_technique_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_tadirah_techniques',
@@ -144,7 +139,7 @@ class TadirahTechniquesTable extends Table
      */
     public function getTadirahTechniques() {
         if(!empty($this->query['count_recent'])) {
-            $this->belongsToMany('Courses', [
+            $this->belongsToMany('DhcrCore.Courses', [
                 'foreignKey' => 'tadirah_technique_id',
                 'targetForeignKey' => 'course_id',
                 'joinTable' => 'courses_tadirah_techniques',
