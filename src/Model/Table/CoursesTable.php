@@ -407,7 +407,7 @@ class CoursesTable extends Table
 	}
 
 	// do some checking for contained models, existing fields and assume defaults...
-	private function __getValidSorter(&$sorters = array(), $value) {
+	private function __getValidSorter(&$sorters, $value) {
 		$direction = 'ASC';
 		$sortkey = $value;
     	if(strpos($value, ':') !== false) {
