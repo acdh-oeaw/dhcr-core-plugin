@@ -39,7 +39,6 @@ class ApplicationTest extends TestCase
         $app->bootstrap();
         $plugins = $app->getPlugins();
 
-        $this->assertSame('Bake', $plugins->get('Bake')->getName());
         $this->assertSame('Migrations', $plugins->get('Migrations')->getName());
         //$this->assertSame('DebugKit', $plugins->get('DebugKit')->getName());
         $this->assertSame('DhcrCore', $plugins->get('DhcrCore')->getName());
