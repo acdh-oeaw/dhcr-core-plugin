@@ -170,40 +170,65 @@ class CoursesTable extends Table
             ->dateTime('last_reminder')
             ->allowEmptyDateTime('last_reminder');
 
+		// changed
         $validator
             ->scalar('name')
             ->maxLength('name', 255)
-            ->allowEmptyString('name');
+            ->notEmptyString('name');
 
         $validator
             ->scalar('description')
             ->allowEmptyString('description');
 
-        $validator
+		// added
+		$validator
+            ->integer('institution_id')
+            ->notEmptyString('institution_id');
+
+        // changed
+		$validator
             ->scalar('department')
             ->maxLength('department', 255)
-            ->allowEmptyString('department');
+            ->notEmptyString('department');
+
+		// added
+		$validator
+            ->integer('course_type_id')
+            ->notEmptyString('course_type_id');
+
+		// added
+		$validator
+            ->integer('language_id')
+            ->notEmptyString('language_id');
 
         $validator
             ->scalar('access_requirements')
             ->allowEmptyString('access_requirements');
 
-        $validator
+        // changed
+		$validator
             ->scalar('start_date')
             ->maxLength('start_date', 100)
-            ->allowEmptyString('start_date');
+            ->notEmptyString('start_date');
 
-        $validator
+        // changed
+		$validator
             ->integer('duration')
-            ->allowEmptyString('duration');
+            ->notEmptyString('duration');
+
+		// added
+		$validator
+            ->integer('course_duration_unit_id')
+            ->notEmptyString('course_duration_unit_id');
 
         $validator
             ->boolean('recurring')
             ->allowEmptyString('recurring', false);
 
-        $validator
+        // changed
+		$validator
             ->scalar('info_url')
-            ->allowEmptyString('info_url');
+            ->notEmptyString('info_url');
 
         $validator
             ->scalar('guide_url')
@@ -233,11 +258,11 @@ class CoursesTable extends Table
 
         $validator
             ->decimal('lon')
-            ->allowEmptyString('lon');
+            ->notEmptyString('lon');
 
         $validator
             ->decimal('lat')
-            ->allowEmptyString('lat');
+            ->notEmptyString('lat');
 
         return $validator;
     }
