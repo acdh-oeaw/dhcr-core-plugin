@@ -109,9 +109,9 @@ class Course extends Entity
         'course_type' => false,
         'language' => false,
         'course_duration_unit' => false,
-        'disciplines' => false,
-        'tadirah_objects' => false,
-        'tadirah_techniques' => false
+        'disciplines' => true,
+        'tadirah_objects' => true,
+        'tadirah_techniques' => true
     ];
 
 	protected $_hidden = [
