@@ -47,4 +47,15 @@ class CoursePolicy
         }
         return false;
     }
+
+    public function canTransfer(IdentityInterface $user, Course $course)
+    {
+        if($user->user_role_id == 2 && $course->country_id == $user->country_id) {  //  moderator transfers in own country
+            return true;
+        }
+        if($user->is_admin) {  // admin can transfer all
+            return true;
+        }
+        return false;
+    }
 }
