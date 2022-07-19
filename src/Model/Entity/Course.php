@@ -75,7 +75,7 @@ class Course extends Entity
         'mod_mailed' => false,
         'created' => false,
         'updated' => true,
-        'last_reminder' => false,
+        'last_reminder' => true,
         'name' => true,
         'description' => true,
         'country_id' => false,
