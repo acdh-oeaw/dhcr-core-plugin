@@ -1,4 +1,5 @@
 <?php
+
 namespace DhcrCore\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -114,14 +115,13 @@ class Course extends Entity
         'tadirah_techniques' => true
     ];
 
-	protected $_hidden = [
-		'user_id',
-		'approval_token',
-		'mod_mailed',
-		'last_reminder',
-		'guide_url',
-		'skip_info_url',
-		'skip_guide_url',
-		'user'
-	];
+    protected $_hidden = [
+        'user_id',
+        'approval_token',
+        'mod_mailed',
+        'guide_url',
+        'skip_info_url',
+        'skip_guide_url',
+        'user'
+    ];
 }
