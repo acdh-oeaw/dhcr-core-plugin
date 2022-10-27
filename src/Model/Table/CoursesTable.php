@@ -413,6 +413,7 @@ class CoursesTable extends Table
 							'CoursesTadirahObjects.tadirah_object_id IN' => $value
 						]
 					];
+					$this->hasMany('CoursesTadirahObjects');
 					break;
 				case 'tadirah_technique_id':
 					$joins[] = [
@@ -421,6 +422,8 @@ class CoursesTable extends Table
 							'CoursesTadirahTechniques.tadirah_technique_id IN' => $value
 						]
 					];
+					$this->hasMany('CoursesTadirahTechniques');
+					break;
 			}
 		}
 
