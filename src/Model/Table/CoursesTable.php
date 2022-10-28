@@ -129,21 +129,9 @@ class CoursesTable extends Table
 			'foreignKey' => 'course_duration_unit_id'
 		]);
 
-		$this->belongsToMany('Disciplines', [
-			'foreignKey' => 'course_id',
-			'targetForeignKey' => 'discipline_id',
-			'joinTable' => 'courses_disciplines',
-		]);
-		$this->belongsToMany('TadirahObjects', [
-			'foreignKey' => 'course_id',
-			'targetForeignKey' => 'tadirah_object_id',
-			'joinTable' => 'courses_tadirah_objects',
-		]);
-		$this->belongsToMany('TadirahTechniques', [
-			'foreignKey' => 'course_id',
-			'targetForeignKey' => 'tadirah_technique_id',
-			'joinTable' => 'courses_tadirah_techniques',
-		]);
+		$this->belongsToMany('DhcrCore.Disciplines');
+		$this->belongsToMany('DhcrCore.TadirahTechniques');
+		$this->belongsToMany('DhcrCore.TadirahObjects');
 	}
 
 	/**
