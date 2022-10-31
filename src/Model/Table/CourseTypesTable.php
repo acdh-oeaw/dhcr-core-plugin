@@ -144,6 +144,7 @@ class CourseTypesTable extends Table
                 'foreignKey' => 'course_type_id',
                 'conditions' => [
                     'Courses.active' => true,
+                    'Courses.approved' => true,
                     'Courses.deleted' => false,
                     'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
                 ]
@@ -166,6 +167,7 @@ class CourseTypesTable extends Table
                 'foreignKey' => 'course_type_id',
                 'conditions' => [
                     'Courses.active' => true,
+                    'Courses.approved' => true,
                     'Courses.deleted' => false,
                     'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
                 ]

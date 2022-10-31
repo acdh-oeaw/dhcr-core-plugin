@@ -185,6 +185,7 @@ class InstitutionsTable extends Table
                 'foreignKey' => 'institution_id',
                 'conditions' => [
                     'Courses.active' => true,
+                    'Courses.approved' => true,
                     'Courses.deleted' => false,
                     'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
                 ]
@@ -207,6 +208,7 @@ class InstitutionsTable extends Table
                 'foreignKey' => 'institution_id',
                 'conditions' => [
                     'Courses.active' => true,
+                    'Courses.approved' => true,
                     'Courses.deleted' => false,
                     'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
                 ]

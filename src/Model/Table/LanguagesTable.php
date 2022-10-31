@@ -115,6 +115,7 @@ class LanguagesTable extends Table
                 'foreignKey' => 'language_id',
                 'conditions' => [
                     'Courses.active' => true,
+                    'Courses.approved' => true,
                     'Courses.deleted' => false,
                     'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
                 ]
@@ -137,6 +138,7 @@ class LanguagesTable extends Table
                 'foreignKey' => 'language_id',
                 'conditions' => [
                     'Courses.active' => true,
+                    'Courses.approved' => true,
                     'Courses.deleted' => false,
                     'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
                 ]

@@ -121,6 +121,7 @@ class TadirahTechniquesTable extends Table
                 'joinTable' => 'courses_tadirah_techniques',
                 'conditions' => [
                     'Courses.active' => true,
+                    'Courses.approved' => true,
                     'Courses.deleted' => false,
                     'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
                 ]
@@ -145,6 +146,7 @@ class TadirahTechniquesTable extends Table
                 'joinTable' => 'courses_tadirah_techniques',
                 'conditions' => [
                     'Courses.active' => true,
+                    'Courses.approved' => true,
                     'Courses.deleted' => false,
                     'Courses.updated >' => date('Y-m-d H:i:s', time() - Configure::read('dhcr.expirationPeriod'))
                 ]
