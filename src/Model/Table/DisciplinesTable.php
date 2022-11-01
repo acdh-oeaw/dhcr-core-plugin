@@ -47,7 +47,7 @@ class DisciplinesTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Courses', [
+        $this->belongsToMany('DhcrCore.Courses', [
             'foreignKey' => 'discipline_id',
             'targetForeignKey' => 'course_id',
             'joinTable' => 'courses_disciplines'

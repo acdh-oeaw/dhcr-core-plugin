@@ -47,7 +47,7 @@ class TadirahTechniquesTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Courses', [
+        $this->belongsToMany('DhcrCore.Courses', [
             'foreignKey' => 'tadirah_technique_id',
             'targetForeignKey' => 'course_id',
             'joinTable' => 'courses_tadirah_techniques'
