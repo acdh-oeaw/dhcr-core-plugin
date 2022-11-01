@@ -409,6 +409,7 @@ class CoursesTable extends Table
 							'CoursesTadirahTechniques.tadirah_technique_id IN' => $value
 						]
 					];
+					break;
 			}
 		}
 
