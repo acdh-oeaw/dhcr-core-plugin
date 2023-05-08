@@ -277,6 +277,7 @@ class CoursesTable extends Table
 	 */
 	public function buildRules(RulesChecker $rules): RulesChecker
 	{
+		$rules->add($rules->isUnique(['name', 'institution_id'], ['allowMultipleNulls' => true]), ['errorField' => 'name']);
 		$rules->add($rules->existsIn(['user_id'], 'Users'));
 		$rules->add($rules->existsIn(['deletion_reason_id'], 'DeletionReasons'));
 		$rules->add($rules->existsIn(['country_id'], 'Countries'));
