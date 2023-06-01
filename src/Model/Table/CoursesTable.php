@@ -177,9 +177,10 @@ class CoursesTable extends Table
 			->maxLength('name', 255)
 			->notEmptyString('name');
 
+		// changed 2023-06-01
 		$validator
 			->scalar('description')
-			->allowEmptyString('description');
+			->notEmptyString('description');
 
 		// added
 		$validator
