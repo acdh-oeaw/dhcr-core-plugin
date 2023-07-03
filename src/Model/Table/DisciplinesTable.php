@@ -29,6 +29,7 @@ class DisciplinesTable extends Table
         'sort_count',
         'count_recent'
     ];
+    public $query;
 
     /**
      * Initialize method
