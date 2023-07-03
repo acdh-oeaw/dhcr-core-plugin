@@ -77,14 +77,12 @@ class TadirahObjectsTable extends Table
         return $validator;
     }
 
-
     // entry point for querystring evaluation
     public function evaluateQuery($requestQuery = array())
     {
         $this->getCleanQuery($requestQuery);
         $this->getFilter();
     }
-
 
     public function getCleanQuery($query = array())
     {
@@ -96,7 +94,6 @@ class TadirahObjectsTable extends Table
         }
         return $this->query = $query;
     }
-
 
     public function getFilter()
     {
@@ -114,7 +111,6 @@ class TadirahObjectsTable extends Table
         }
         return $this->query;
     }
-
 
     public function getTadirahObject($id = null)
     {
