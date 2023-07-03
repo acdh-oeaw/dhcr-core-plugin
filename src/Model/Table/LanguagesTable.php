@@ -91,7 +91,7 @@ class LanguagesTable extends Table
                 continue;
             }
         }
-        return $this->query = $query;
+        $this->query = $query;
     }
 
 
