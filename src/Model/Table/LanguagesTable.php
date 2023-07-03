@@ -24,14 +24,12 @@ use Cake\Validation\Validator;
  */
 class LanguagesTable extends Table
 {
-
     public $allowedParameters = [
         'course_count',
         'sort_count',
         'count_recent'
     ];
-
-
+    
     /**
      * Initialize method
      *
@@ -74,14 +72,12 @@ class LanguagesTable extends Table
         return $validator;
     }
 
-
     // entry point for querystring evaluation
     public function evaluateQuery($requestQuery = array())
     {
         $this->getCleanQuery($requestQuery);
         $this->getFilter();
     }
-
 
     public function getCleanQuery($query = array())
     {
@@ -94,7 +90,6 @@ class LanguagesTable extends Table
         $this->query = $query;
         return $this->query;
     }
-
 
     public function getFilter()
     {
@@ -112,7 +107,6 @@ class LanguagesTable extends Table
         }
         return $this->query;
     }
-
 
     public function getLanguage($id = null)
     {
