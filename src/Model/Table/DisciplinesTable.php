@@ -24,7 +24,6 @@ use Cake\Validation\Validator;
  */
 class DisciplinesTable extends Table
 {
-
     public $allowedParameters = [
         'course_count',
         'sort_count',
@@ -75,14 +74,12 @@ class DisciplinesTable extends Table
         return $validator;
     }
 
-
     // entry point for querystring evaluation
     public function evaluateQuery($requestQuery = array())
     {
         $this->getCleanQuery($requestQuery);
         $this->getFilter();
     }
-
 
     public function getCleanQuery($query = array())
     {
@@ -94,7 +91,6 @@ class DisciplinesTable extends Table
         }
         return $this->query = $query;
     }
-
 
     public function getFilter()
     {
@@ -112,7 +108,6 @@ class DisciplinesTable extends Table
         }
         return $this->query;
     }
-
 
     public function getDiscipline($id = null)
     {
