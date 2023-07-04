@@ -1,4 +1,5 @@
 <?php
+
 namespace DhcrCore\Model\Table;
 
 use Cake\ORM\Query;
@@ -28,7 +29,7 @@ class DeletionReasonsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config) : void
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -47,7 +48,7 @@ class DeletionReasonsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator) : Validator
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -62,22 +63,21 @@ class DeletionReasonsTable extends Table
         return $validator;
     }
 
+    public function getDeletionReason($id = null)
+    {
+        $record = $this->get($id, [
+            'contain' => [],
+            'fields' => ['id', 'name']
+        ]);
+        return $record;
+    }
 
-	public function getDeletionReason($id = null) {
-		$record = $this->get($id, [
-			'contain' => [],
-			'fields' => ['id','name']
-		]);
-		return $record;
-	}
-
-
-	public function getDeletionReasons() {
-		$records = $this->find()
-			->select(['id','name'])
-			->contain([])
-			->toArray();
-		return $records;
-	}
-
+    public function getDeletionReasons()
+    {
+        $records = $this->find()
+            ->select(['id', 'name'])
+            ->contain([])
+            ->toArray();
+        return $records;
+    }
 }
