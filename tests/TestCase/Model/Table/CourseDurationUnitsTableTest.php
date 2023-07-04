@@ -1,4 +1,5 @@
 <?php
+
 namespace DhcrCore\Test\TestCase\Model\Table;
 
 use DhcrCore\Model\Table\CourseDurationUnitsTable;
@@ -71,23 +72,20 @@ class CourseDurationUnitsTableTest extends TestCase
         $this->markTestIncomplete('Not implemented yet.');
     }
 
+    public function testGetCourseDurationUnit()
+    {
+        $record = $this->CourseDurationUnits->getCourseDurationUnit(1);
+        $this->assertArrayHasKey('id', $record);
+        $this->assertArrayHasKey('name', $record);
+    }
 
-
-
-	public function testGetCourseDurationUnit() {
-		$record = $this->CourseDurationUnits->getCourseDurationUnit(1);
-		$this->assertArrayHasKey('id', $record);
-		$this->assertArrayHasKey('name', $record);
-	}
-
-
-	public function testGetCourseDurationUnits() {
-		$this->CourseDurationUnits->query = [];
-		$records = $this->CourseDurationUnits->getCourseDurationUnits();
-		foreach($records as $record) {
-			$this->assertArrayHasKey('id', $record);
-			$this->assertArrayHasKey('name', $record);
-		}
-	}
-
+    public function testGetCourseDurationUnits()
+    {
+        $this->CourseDurationUnits->query = [];
+        $records = $this->CourseDurationUnits->getCourseDurationUnits();
+        foreach ($records as $record) {
+            $this->assertArrayHasKey('id', $record);
+            $this->assertArrayHasKey('name', $record);
+        }
+    }
 }
