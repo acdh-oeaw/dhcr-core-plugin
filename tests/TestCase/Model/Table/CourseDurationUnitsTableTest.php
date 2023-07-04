@@ -81,7 +81,6 @@ class CourseDurationUnitsTableTest extends TestCase
 
     public function testGetCourseDurationUnits()
     {
-        $this->CourseDurationUnits->query = [];
         $records = $this->CourseDurationUnits->getCourseDurationUnits();
         foreach ($records as $record) {
             $this->assertArrayHasKey('id', $record);
