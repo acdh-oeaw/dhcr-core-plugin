@@ -81,7 +81,6 @@ class DeletionReasonsTableTest extends TestCase
 
     public function testGetDeletionReasons()
     {
-        $this->DeletionReasons->query = [];
         $records = $this->DeletionReasons->getDeletionReasons();
         foreach ($records as $record) {
             $this->assertArrayHasKey('id', $record);
