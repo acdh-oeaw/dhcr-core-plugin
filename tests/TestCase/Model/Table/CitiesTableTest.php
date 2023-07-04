@@ -159,7 +159,7 @@ class CitiesTableTest extends TestCase
 		$cities = $this->Cities->getCities();
 		foreach($cities as $city) {
 			// we retrieve an object here
-			$this->assertObjectNotHasAttribute('course_count', $city);
+			$this->assertObjectNotHasProperty('course_count', $city);
 		}
 		$this->Cities->query = ['course_count' => true,'sort_count' => true];
 		$cities = $this->Cities->getCities();
