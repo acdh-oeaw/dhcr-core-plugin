@@ -78,7 +78,12 @@ class CountriesTable extends Table
             ->scalar('name')
             ->maxLength('name', 100)
             ->requirePresence('name', 'create')
-            ->allowEmptyString('name', false);
+            ->notEmptyString('name')
+            ->add('name', 'unique', [
+                'rule' => 'validateUnique',
+                'provider' => 'table',
+                'message' => 'The country already exists.'
+            ]);
 
         $validator
             ->scalar('domain_name')
