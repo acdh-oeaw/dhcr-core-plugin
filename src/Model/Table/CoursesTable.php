@@ -237,7 +237,8 @@ class CoursesTable extends Table
 		// changed
 		$validator
 			->scalar('info_url')
-			->notEmptyString('info_url');
+			->notEmptyString('info_url')
+			->add('info_url', 'valid-url', ['rule' => 'url']);
 
 		$validator
 			->scalar('guide_url')
