@@ -285,6 +285,9 @@ class CoursesTable extends Table
 				$year = substr($startdate, 0, 4);
 				$month = substr($startdate, 5, 2);
 				$day = substr($startdate, 8, 2);
+				if (!is_numeric($year) || !is_numeric($month) || !is_numeric($day)) {
+					return false;
+				}
 				if (!checkdate($month, $day, $year)) {
 					return false;
 				}
