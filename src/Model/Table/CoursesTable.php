@@ -8,6 +8,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\Utility\Hash;
+use Exception;
 
 /**
  * Courses Model
@@ -210,8 +211,14 @@ class CoursesTable extends Table
 		// changed
 		$validator
 			->scalar('start_date')
+			->minLength('start_date', 10)
 			->maxLength('start_date', 100)
-			->notEmptyString('start_date');
+			->notEmptyString('start_date')
+			->add('start_date', 'ValidStartdate', [
+				'rule' => 'isValidStartdateField',
+				'message' => 'You need to provide a valid start date',
+				'provider' => 'table',
+			]);
 
 		// changed
 		$validator
@@ -267,6 +274,24 @@ class CoursesTable extends Table
 			->notEmptyString('lat');
 
 		return $validator;
+	}
+
+	public function isValidStartdateField($startdateField): bool
+	{
+		try {
+			$startdates = explode(";", $startdateField);
+			foreach ($startdates as $startdate) {
+				$year = substr($startdate, 0, 4);
+				$month = substr($startdate, 5, 2);
+				$day = substr($startdate, 8, 2);
+				if (!checkdate($month, $day, $year)) {
+					return false;
+				}
+			}
+		} catch (Exception $e) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
