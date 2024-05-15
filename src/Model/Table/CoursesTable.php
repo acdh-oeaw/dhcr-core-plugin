@@ -274,6 +274,11 @@ class CoursesTable extends Table
 			->decimal('lat')
 			->notEmptyString('lat');
 
+		$validator
+			->scalar('training_url')
+			->allowEmptyString('training_url')
+			->add('training_url', 'valid-url', ['rule' => 'url']);
+
 		return $validator;
 	}
 
