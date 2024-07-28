@@ -282,6 +282,9 @@ class CoursesTable extends Table
 		try {
 			$startdates = explode(";", $startdateField);
 			foreach ($startdates as $startdate) {
+				if (strlen($startdate) != 10) {	// guard against invalid ; separator
+					return false;
+				}
 				$year = substr($startdate, 0, 4);
 				$month = substr($startdate, 5, 2);
 				$day = substr($startdate, 8, 2);
@@ -289,6 +292,11 @@ class CoursesTable extends Table
 					return false;
 				}
 				if (!checkdate($month, $day, $year)) {
+					return false;
+				}
+				$sep1 = substr($startdate, 4, 1);
+				$sep2 = substr($startdate, 7, 1);
+				if ($sep1 != '-' || $sep2 != '-') {
 					return false;
 				}
 			}
