@@ -22,11 +22,11 @@ class DisciplinesTableTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.DhcrCore.Disciplines',
-        'plugin.DhcrCore.Courses',
-        'plugin.DhcrCore.CoursesDisciplines'
-    ];
+    // public $fixtures = [
+    //     'plugin.DhcrCore.Disciplines',
+    //     'plugin.DhcrCore.Courses',
+    //     'plugin.DhcrCore.CoursesDisciplines'
+    // ];
 
     /**
      * setUp method

@@ -22,13 +22,13 @@ class InstitutionsTableTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.DhcrCore.Institutions',
-        'plugin.DhcrCore.Cities',
-        'plugin.DhcrCore.Countries',
-        'plugin.DhcrCore.Courses',
-        'plugin.DhcrCore.Users'
-    ];
+    // public $fixtures = [
+    //     'plugin.DhcrCore.Institutions',
+    //     'plugin.DhcrCore.Cities',
+    //     'plugin.DhcrCore.Countries',
+    //     'plugin.DhcrCore.Courses',
+    //     'plugin.DhcrCore.Users'
+    // ];
 
     /**
      * setUp method

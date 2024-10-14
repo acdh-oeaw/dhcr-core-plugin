@@ -22,24 +22,24 @@ class CoursesTableTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.DhcrCore.Courses',
-        'plugin.DhcrCore.Users',
-        'plugin.DhcrCore.DeletionReasons',
-        'plugin.DhcrCore.Countries',
-        'plugin.DhcrCore.Cities',
-        'plugin.DhcrCore.Institutions',
-        'plugin.DhcrCore.CourseParentTypes',
-        'plugin.DhcrCore.CourseTypes',
-        'plugin.DhcrCore.Languages',
-        'plugin.DhcrCore.CourseDurationUnits',
-        'plugin.DhcrCore.Disciplines',
-        'plugin.DhcrCore.TadirahObjects',
-        'plugin.DhcrCore.TadirahTechniques',
-		'plugin.DhcrCore.CoursesTadirahObjects',
-		'plugin.DhcrCore.CoursesTadirahTechniques',
-		'plugin.DhcrCore.CoursesDisciplines'
-    ];
+    // public $fixtures = [
+    //     'plugin.DhcrCore.Courses',
+    //     'plugin.DhcrCore.Users',
+    //     'plugin.DhcrCore.DeletionReasons',
+    //     'plugin.DhcrCore.Countries',
+    //     'plugin.DhcrCore.Cities',
+    //     'plugin.DhcrCore.Institutions',
+    //     'plugin.DhcrCore.CourseParentTypes',
+    //     'plugin.DhcrCore.CourseTypes',
+    //     'plugin.DhcrCore.Languages',
+    //     'plugin.DhcrCore.CourseDurationUnits',
+    //     'plugin.DhcrCore.Disciplines',
+    //     'plugin.DhcrCore.TadirahObjects',
+    //     'plugin.DhcrCore.TadirahTechniques',
+	// 	'plugin.DhcrCore.CoursesTadirahObjects',
+	// 	'plugin.DhcrCore.CoursesTadirahTechniques',
+	// 	'plugin.DhcrCore.CoursesDisciplines'
+    // ];
 
     /**
      * setUp method

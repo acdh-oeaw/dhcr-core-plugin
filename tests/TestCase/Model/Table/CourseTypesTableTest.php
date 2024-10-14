@@ -22,11 +22,11 @@ class CourseTypesTableTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.DhcrCore.CourseTypes',
-        'plugin.DhcrCore.CourseParentTypes',
-        'plugin.DhcrCore.Courses'
-    ];
+    // public $fixtures = [
+    //     'plugin.DhcrCore.CourseTypes',
+    //     'plugin.DhcrCore.CourseParentTypes',
+    //     'plugin.DhcrCore.Courses'
+    // ];
 
     /**
      * setUp method

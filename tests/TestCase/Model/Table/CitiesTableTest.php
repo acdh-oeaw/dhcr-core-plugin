@@ -22,12 +22,12 @@ class CitiesTableTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.DhcrCore.Cities',
-        'plugin.DhcrCore.Countries',
-        'plugin.DhcrCore.Courses',
-        'plugin.DhcrCore.Institutions'
-    ];
+    // public $fixtures = [
+    //     'plugin.DhcrCore.Cities',
+    //     'plugin.DhcrCore.Countries',
+    //     'plugin.DhcrCore.Courses',
+    //     'plugin.DhcrCore.Institutions'
+    // ];
 
     /**
      * setUp method

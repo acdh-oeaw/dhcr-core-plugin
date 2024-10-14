@@ -23,10 +23,10 @@ class DeletionReasonsTableTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.DhcrCore.DeletionReasons',
-        'plugin.DhcrCore.Courses'
-    ];
+    // public $fixtures = [
+    //     'plugin.DhcrCore.DeletionReasons',
+    //     'plugin.DhcrCore.Courses'
+    // ];
 
     /**
      * setUp method
