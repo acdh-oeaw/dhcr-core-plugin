@@ -23,10 +23,10 @@ class CourseDurationUnitsTableTest extends TestCase
      *
      * @var array
      */
-    // public $fixtures = [
-    //     'plugin.DhcrCore.CourseDurationUnits',
-    //     'plugin.DhcrCore.Courses'
-    // ];
+    public $fixtures = [
+        'plugin.DhcrCore.CourseDurationUnits',
+        'plugin.DhcrCore.Courses'
+    ];
 
     /**
      * setUp method

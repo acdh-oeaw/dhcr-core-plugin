@@ -22,10 +22,10 @@ class LanguagesTableTest extends TestCase
      *
      * @var array
      */
-    // public $fixtures = [
-    //     'plugin.DhcrCore.Languages',
-    //     'plugin.DhcrCore.Courses'
-    // ];
+    public $fixtures = [
+        'plugin.DhcrCore.Languages',
+        'plugin.DhcrCore.Courses'
+    ];
 
     /**
      * setUp method

@@ -22,11 +22,11 @@ class TadirahTechniquesTableTest extends TestCase
      *
      * @var array
      */
-    // public $fixtures = [
-    //     'plugin.DhcrCore.TadirahTechniques',
-    //     'plugin.DhcrCore.Courses',
-    //     'plugin.DhcrCore.CoursesTadirahTechniques'
-    // ];
+    public $fixtures = [
+        'plugin.DhcrCore.TadirahTechniques',
+        'plugin.DhcrCore.Courses',
+        'plugin.DhcrCore.CoursesTadirahTechniques'
+    ];
 
     /**
      * setUp method
