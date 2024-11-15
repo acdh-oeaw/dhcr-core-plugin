@@ -7,7 +7,6 @@ use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
 
 class CourseType extends Entity
 {
-
     use LazyLoadEntityTrait;
 
     protected $_accessible = [
