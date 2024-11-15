@@ -6,4 +6,3 @@ The plugin is imported as a submodule into the main projects.
 For testing, the plugin ships it's own testing dependencies.
 Integrating the plugin tests into the main app phpunit.xml.dist won't work!
 Hence, the plugin is using an own test configuration.
-
