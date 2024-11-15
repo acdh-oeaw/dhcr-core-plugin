@@ -3,5 +3,5 @@
 // using the app-level phpunit.xml.dist
 
 use Cake\Core\Configure;
-Configure::write('dhcr.expirationPeriod', 60*60*24*489);
 
+Configure::write('dhcr.expirationPeriod', 60 * 60 * 24 * 489);
