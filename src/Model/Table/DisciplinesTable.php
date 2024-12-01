@@ -8,20 +8,6 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * Disciplines Model
- *
- * @property \App\Model\Table\CoursesTable|\Cake\ORM\Association\BelongsToMany $Courses
- *
- * @method \App\Model\Entity\Discipline get($primaryKey, $options = [])
- * @method \App\Model\Entity\Discipline newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Discipline[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Discipline|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Discipline saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Discipline patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Discipline[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Discipline findOrCreate($search, callable $callback = null, $options = [])
- */
 class DisciplinesTable extends Table
 {
     public $allowedParameters = [
@@ -31,12 +17,6 @@ class DisciplinesTable extends Table
     ];
     public $query = array();
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -54,12 +34,6 @@ class DisciplinesTable extends Table
         ]);
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
     public function validationDefault(Validator $validator): Validator
     {
         $validator
@@ -71,7 +45,6 @@ class DisciplinesTable extends Table
             ->maxLength('name', 255)
             ->requirePresence('name', 'create')
             ->allowEmptyString('name', false);
-
         return $validator;
     }
 
@@ -162,7 +135,6 @@ class DisciplinesTable extends Table
         // sort by course_count descending, using CounterSortBehavior
         if (!empty($this->query['sort_count']))
             $records = $this->sortByCourseCount($records);
-
         return $records;
     }
 }
