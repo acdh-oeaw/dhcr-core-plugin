@@ -8,20 +8,6 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * Languages Model
- *
- * @property \App\Model\Table\CoursesTable|\Cake\ORM\Association\HasMany $Courses
- *
- * @method \App\Model\Entity\Language get($primaryKey, $options = [])
- * @method \App\Model\Entity\Language newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Language[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Language|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Language saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Language patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Language[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Language findOrCreate($search, callable $callback = null, $options = [])
- */
 class LanguagesTable extends Table
 {
     public $allowedParameters = [
@@ -30,13 +16,7 @@ class LanguagesTable extends Table
         'count_recent'
     ];
     public $query = array();
-    
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -52,12 +32,6 @@ class LanguagesTable extends Table
         ]);
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
     public function validationDefault(Validator $validator): Validator
     {
         $validator
@@ -69,7 +43,6 @@ class LanguagesTable extends Table
             ->maxLength('name', 100)
             ->requirePresence('name', 'create')
             ->allowEmptyString('name', false);
-
         return $validator;
     }
 
@@ -157,7 +130,6 @@ class LanguagesTable extends Table
         // sort by course_count descending, using CounterSortBehavior
         if (!empty($this->query['sort_count']))
             $records = $this->sortByCourseCount($records);
-
         return $records;
     }
 }
