@@ -8,21 +8,6 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * TadirahTechniques Model
- *
- * @property \App\Model\Table\CoursesTable|\Cake\ORM\Association\BelongsToMany $Courses
- * @property \App\Model\Table\TadirahActivitiesTable|\Cake\ORM\Association\BelongsToMany $TadirahActivities
- *
- * @method \App\Model\Entity\TadirahTechnique get($primaryKey, $options = [])
- * @method \App\Model\Entity\TadirahTechnique newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\TadirahTechnique[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TadirahTechnique|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TadirahTechnique saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TadirahTechnique patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\TadirahTechnique[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\TadirahTechnique findOrCreate($search, callable $callback = null, $options = [])
- */
 class TadirahTechniquesTable extends Table
 {
     public $allowedParameters = [
@@ -32,12 +17,6 @@ class TadirahTechniquesTable extends Table
     ];
     public $query = array();
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -55,12 +34,6 @@ class TadirahTechniquesTable extends Table
         ]);
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
     public function validationDefault(Validator $validator): Validator
     {
         $validator
@@ -160,13 +133,11 @@ class TadirahTechniquesTable extends Table
             ->contain([])
             ->order(['TadirahTechniques.name' => 'ASC'])
             ->toArray();
-
         if (!empty($this->query['course_count']))
             foreach ($records as &$record) $record->setVirtual(['course_count']);
         // sort by course_count descending, using CounterSortBehavior
         if (!empty($this->query['sort_count']))
             $records = $this->sortByCourseCount($records);
-
         return $records;
     }
 }
