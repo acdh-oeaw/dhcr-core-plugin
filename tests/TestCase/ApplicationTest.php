@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -12,6 +13,7 @@
  * @since         3.3.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace DhcrCore\Test\TestCase;
 
 use App\Application;
@@ -22,17 +24,8 @@ use Cake\Routing\Middleware\RoutingMiddleware;
 use Cake\TestSuite\TestCase;
 use InvalidArgumentException;
 
-/**
- * ApplicationTest class
- */
 class ApplicationTest extends TestCase
 {
-
-    /**
-     * testBootstrap
-     *
-     * @return void
-     */
     public function testBootstrap()
     {
         $app = new Application(dirname(dirname(__DIR__)) . '/config');
@@ -44,11 +37,6 @@ class ApplicationTest extends TestCase
         $this->assertSame('DhcrCore', $plugins->get('DhcrCore')->getName());
     }
 
-    /**
-     * testBootstrapPluginWitoutHalt
-     *
-     * @return void
-     */
     public function testBootstrapPluginWitoutHalt()
     {
         $this->expectException(InvalidArgumentException::class);
@@ -64,11 +52,6 @@ class ApplicationTest extends TestCase
         $app->bootstrap();
     }
 
-    /**
-     * testMiddleware
-     *
-     * @return void
-     */
     public function testMiddleware()
     {
         $app = new Application(dirname(dirname(__DIR__)) . '/config');
