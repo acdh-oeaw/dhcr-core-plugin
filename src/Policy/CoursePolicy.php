@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DhcrCore\Policy;
@@ -15,13 +16,13 @@ class CoursePolicy
 
     public function canEdit(IdentityInterface $user, Course $course)
     {
-        if($course->user_id == $user->id) {  // contributor edits own course
+        if ($course->user_id == $user->id) {  // contributor edits own course
             return true;
         }
-        if($user->user_role_id == 2 && $course->country_id == $user->country_id) {  //  moderator edits in own country
+        if ($user->user_role_id == 2 && $course->country_id == $user->country_id) {  //  moderator edits in own country
             return true;
         }
-        if($user->is_admin) {  // admin can edit all
+        if ($user->is_admin) {  // admin can edit all
             return true;
         }
         return false;
@@ -39,10 +40,10 @@ class CoursePolicy
 
     public function canApprove(IdentityInterface $user, Course $course)
     {
-        if($user->user_role_id == 2 && $course->country_id == $user->country_id) {  //  moderator approves in own country
+        if ($user->user_role_id == 2 && $course->country_id == $user->country_id) {  //  moderator approves in own country
             return true;
         }
-        if($user->is_admin) {  // admin can approve all
+        if ($user->is_admin) {  // admin can approve all
             return true;
         }
         return false;
@@ -50,10 +51,10 @@ class CoursePolicy
 
     public function canTransfer(IdentityInterface $user, Course $course)
     {
-        if($user->user_role_id == 2 && $course->country_id == $user->country_id) {  //  moderator transfers in own country
+        if ($user->user_role_id == 2 && $course->country_id == $user->country_id) {  //  moderator transfers in own country
             return true;
         }
-        if($user->is_admin) {  // admin can transfer all
+        if ($user->is_admin) {  // admin can transfer all
             return true;
         }
         return false;
