@@ -29,7 +29,7 @@ class LanguagesTable extends Table
         'sort_count',
         'count_recent'
     ];
-    public $query;
+    public $query = array();
     
     /**
      * Initialize method
