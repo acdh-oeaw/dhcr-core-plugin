@@ -10,46 +10,12 @@ use Cake\Validation\Validator;
 use Cake\Utility\Hash;
 use Exception;
 
-/**
- * Courses Model
- *
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\DeletionReasonsTable|\Cake\ORM\Association\BelongsTo $DeletionReasons
- * @property \App\Model\Table\CountriesTable|\Cake\ORM\Association\BelongsTo $Countries
- * @property \App\Model\Table\CitiesTable|\Cake\ORM\Association\BelongsTo $Cities
- * @property \App\Model\Table\InstitutionsTable|\Cake\ORM\Association\BelongsTo $Institutions
- * @property \App\Model\Table\CourseParentTypesTable|\Cake\ORM\Association\BelongsTo $CourseParentTypes
- * @property \App\Model\Table\CourseTypesTable|\Cake\ORM\Association\BelongsTo $CourseTypes
- * @property \App\Model\Table\LanguagesTable|\Cake\ORM\Association\BelongsTo $Languages
- * @property \App\Model\Table\CourseDurationUnitsTable|\Cake\ORM\Association\BelongsTo $CourseDurationUnits
- * @property \App\Model\Table\DisciplinesTable|\Cake\ORM\Association\BelongsToMany $Disciplines
- * @property \App\Model\Table\TadirahActivitiesTable|\Cake\ORM\Association\BelongsToMany $TadirahActivities
- * @property \App\Model\Table\TadirahObjectsTable|\Cake\ORM\Association\BelongsToMany $TadirahObjects
- * @property \App\Model\Table\TadirahTechniquesTable|\Cake\ORM\Association\BelongsToMany $TadirahTechniques
- *
- * @method \App\Model\Entity\Course get($primaryKey, $options = [])
- * @method \App\Model\Entity\Course newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Course[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Course|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Course saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Course patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Course[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Course findOrCreate($search, callable $callback = null, $options = [])
- *
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- */
 class CoursesTable extends Table
 {
-
 	public $query = array();
-
 	public $joins = array();	// filter by associated data
-
 	public $filter = array();	// oldschool find conditions
-
-	public $sorters = array();		// sort criteria
-
-
+	public $sorters = array();	// sort criteria
 
 	public $allowedFilters = [
 		'country_id',
@@ -86,12 +52,6 @@ class CoursesTable extends Table
 		'TadirahObjects'
 	];
 
-	/**
-	 * Initialize method
-	 *
-	 * @param array $config The configuration for the Table.
-	 * @return void
-	 */
 	public function initialize(array $config): void
 	{
 		parent::initialize($config);
@@ -135,12 +95,6 @@ class CoursesTable extends Table
 		$this->belongsToMany('DhcrCore.TadirahObjects');
 	}
 
-	/**
-	 * Default validation rules.
-	 *
-	 * @param \Cake\Validation\Validator $validator Validator instance.
-	 * @return \Cake\Validation\Validator
-	 */
 	public function validationDefault(Validator $validator): Validator
 	{
 		$validator
@@ -172,34 +126,28 @@ class CoursesTable extends Table
 			->dateTime('last_reminder')
 			->allowEmptyDateTime('last_reminder');
 
-		// changed
 		$validator
 			->scalar('name')
 			->maxLength('name', 255)
 			->notEmptyString('name');
 
-		// changed 2023-06-01
 		$validator
 			->scalar('description')
 			->notEmptyString('description');
 
-		// added
 		$validator
 			->integer('institution_id')
 			->notEmptyString('institution_id');
 
-		// changed
 		$validator
 			->scalar('department')
 			->maxLength('department', 255)
 			->notEmptyString('department');
 
-		// added
 		$validator
 			->integer('course_type_id')
 			->notEmptyString('course_type_id');
 
-		// added
 		$validator
 			->integer('language_id')
 			->notEmptyString('language_id');
@@ -208,7 +156,6 @@ class CoursesTable extends Table
 			->scalar('access_requirements')
 			->allowEmptyString('access_requirements');
 
-		// changed
 		$validator
 			->scalar('start_date')
 			->minLength('start_date', 10)
@@ -220,12 +167,10 @@ class CoursesTable extends Table
 				'provider' => 'table',
 			]);
 
-		// changed
 		$validator
 			->integer('duration')
 			->notEmptyString('duration');
 
-		// added
 		$validator
 			->integer('course_duration_unit_id')
 			->notEmptyString('course_duration_unit_id');
@@ -234,7 +179,6 @@ class CoursesTable extends Table
 			->boolean('recurring')
 			->allowEmptyString('recurring', false);
 
-		// changed
 		$validator
 			->scalar('info_url')
 			->notEmptyString('info_url')
@@ -306,13 +250,6 @@ class CoursesTable extends Table
 		return true;
 	}
 
-	/**
-	 * Returns a rules checker object that will be used for validating
-	 * application integrity.
-	 *
-	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-	 * @return \Cake\ORM\RulesChecker
-	 */
 	public function buildRules(RulesChecker $rules): RulesChecker
 	{
 		$rules->add($rules->isUnique(['name', 'institution_id', 'course_type_id'], ['allowMultipleNulls' => true]), ['errorField' => 'name']);
@@ -329,7 +266,6 @@ class CoursesTable extends Table
 		return $rules;
 	}
 
-
 	// entrance point for querystring evaluation
 	public function evaluateQuery($requestQuery = array())
 	{
@@ -338,7 +274,6 @@ class CoursesTable extends Table
 		$this->getJoins();
 		$this->getSorters();
 	}
-
 
 	public function getCleanQuery($query = array())
 	{
@@ -362,7 +297,6 @@ class CoursesTable extends Table
 		}
 		return $this->query = $query;
 	}
-
 
 	public function getFilter()
 	{
@@ -418,7 +352,6 @@ class CoursesTable extends Table
 		return $this->filter = $conditions;
 	}
 
-
 	public function getJoins()
 	{
 		$joins = [];
@@ -451,10 +384,8 @@ class CoursesTable extends Table
 					break;
 			}
 		}
-
 		return $this->joins = $joins;
 	}
-
 
 	public function getSorters()
 	{
@@ -483,7 +414,6 @@ class CoursesTable extends Table
 				$direction = strtoupper($expl[1]);
 			$sortkey = $expl[0];
 		}
-
 		if (strpos($sortkey, '.') === false) $sortkey = 'Courses.' . $sortkey;
 		$expl = array_map('trim', explode('.', $sortkey));
 		$model = $expl[0];
@@ -500,7 +430,6 @@ class CoursesTable extends Table
 		}
 	}
 
-
 	public function getResults()
 	{
 		$query = $this->find()->distinct()
@@ -511,10 +440,8 @@ class CoursesTable extends Table
 		}
 		$query->order($this->sorters);
 		$query->where($this->filter);
-
 		return $query->toArray();
 	}
-
 
 	public function countResults()
 	{
@@ -524,7 +451,6 @@ class CoursesTable extends Table
 			$this->filter[] = $join['conditions'];
 		}
 		$query->where($this->filter);
-
 		return $query->count();
 	}
 }
