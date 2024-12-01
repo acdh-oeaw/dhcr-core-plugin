@@ -8,20 +8,6 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * TadirahObjects Model
- *
- * @property \App\Model\Table\CoursesTable|\Cake\ORM\Association\BelongsToMany $Courses
- *
- * @method \App\Model\Entity\TadirahObject get($primaryKey, $options = [])
- * @method \App\Model\Entity\TadirahObject newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\TadirahObject[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TadirahObject|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TadirahObject saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TadirahObject patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\TadirahObject[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\TadirahObject findOrCreate($search, callable $callback = null, $options = [])
- */
 class TadirahObjectsTable extends Table
 {
     public $allowedParameters = [
@@ -31,12 +17,6 @@ class TadirahObjectsTable extends Table
     ];
     public $query = array();
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -54,12 +34,6 @@ class TadirahObjectsTable extends Table
         ]);
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
     public function validationDefault(Validator $validator): Validator
     {
         $validator
@@ -74,7 +48,6 @@ class TadirahObjectsTable extends Table
         $validator
             ->scalar('description')
             ->allowEmptyString('description');
-
         return $validator;
     }
 
@@ -159,13 +132,11 @@ class TadirahObjectsTable extends Table
             ->contain([])
             ->order(['TadirahObjects.name' => 'ASC'])
             ->toArray();
-
         if (!empty($this->query['course_count']))
             foreach ($records as &$record) $record->setVirtual(['course_count']);
         // sort by course_count descending, using CounterSortBehavior
         if (!empty($this->query['sort_count']))
             $records = $this->sortByCourseCount($records);
-
         return $records;
     }
 }
