@@ -1,18 +1,11 @@
 <?php
+
 namespace DhcrCore\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
 
-/**
- * CoursesFixture
- */
 class CoursesFixture extends TestFixture
 {
-    /**
-     * Fields
-     *
-     * @var array
-     */
     // @codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
@@ -82,12 +75,8 @@ class CoursesFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-    /**
-     * Init method
-     *
-     * @return void
-     */
-    public function init() : void
+
+    public function init(): void
     {
         $this->records = [
             [
