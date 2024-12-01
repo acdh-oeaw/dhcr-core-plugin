@@ -6,33 +6,14 @@ use DhcrCore\Model\Table\DeletionReasonsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
-/**
- * App\Model\Table\DeletionReasonsTable Test Case
- */
 class DeletionReasonsTableTest extends TestCase
 {
-    /**
-     * Test subject
-     *
-     * @var \App\Model\Table\DeletionReasonsTable
-     */
     public $DeletionReasons;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
     public $fixtures = [
         'plugin.DhcrCore.DeletionReasons',
         'plugin.DhcrCore.Courses'
     ];
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -40,33 +21,17 @@ class DeletionReasonsTableTest extends TestCase
         $this->DeletionReasons = TableRegistry::getTableLocator()->get('DeletionReasons', $config);
     }
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
     public function tearDown(): void
     {
         unset($this->DeletionReasons);
-
         parent::tearDown();
     }
 
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
     public function testInitialize()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');

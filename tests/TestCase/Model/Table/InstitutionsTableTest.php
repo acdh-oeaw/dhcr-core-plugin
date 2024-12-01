@@ -1,92 +1,52 @@
 <?php
+
 namespace DhcrCore\Test\TestCase\Model\Table;
 
 use DhcrCore\Model\Table\InstitutionsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
-/**
- * App\Model\Table\InstitutionsTable Test Case
- */
 class InstitutionsTableTest extends TestCase
 {
-    /**
-     * Test subject
-     *
-     * @var \App\Model\Table\InstitutionsTable
-     */
-    public $Institutions;
+	public $Institutions;
+	public $fixtures = [
+		'plugin.DhcrCore.Institutions',
+		'plugin.DhcrCore.Cities',
+		'plugin.DhcrCore.Countries',
+		'plugin.DhcrCore.Courses',
+		'plugin.DhcrCore.Users'
+	];
 
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.DhcrCore.Institutions',
-        'plugin.DhcrCore.Cities',
-        'plugin.DhcrCore.Countries',
-        'plugin.DhcrCore.Courses',
-        'plugin.DhcrCore.Users'
-    ];
+	public function setUp(): void
+	{
+		parent::setUp();
+		$config = TableRegistry::getTableLocator()->exists('Institutions') ? [] : ['className' => InstitutionsTable::class];
+		$this->Institutions = TableRegistry::getTableLocator()->get('Institutions', $config);
+	}
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Institutions') ? [] : ['className' => InstitutionsTable::class];
-        $this->Institutions = TableRegistry::getTableLocator()->get('Institutions', $config);
-    }
+	public function tearDown(): void
+	{
+		unset($this->Institutions);
+		parent::tearDown();
+	}
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
-    public function tearDown(): void
-    {
-        unset($this->Institutions);
+	public function testInitialize()
+	{
+		$this->markTestIncomplete('Not implemented yet.');
+	}
 
-        parent::tearDown();
-    }
+	public function testValidationDefault()
+	{
+		$this->markTestIncomplete('Not implemented yet.');
+	}
 
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+	public function testBuildRules()
+	{
+		$this->markTestIncomplete('Not implemented yet.');
+	}
 
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
-    public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-
-
-	public function testGetCleanQuery() {
+	public function testGetCleanQuery()
+	{
 		$query = [
 			'foo' => 'bar',
 			'sort_count' => '',
@@ -102,8 +62,8 @@ class InstitutionsTableTest extends TestCase
 		$this->assertArrayHasKey('city_id', $query);
 	}
 
-
-	public function testGetFilter() {
+	public function testGetFilter()
+	{
 		$this->Institutions->query = [
 			'sort_count' => ''
 		];
@@ -113,10 +73,10 @@ class InstitutionsTableTest extends TestCase
 		$this->assertArrayHasKey('course_count', $query);
 		$this->assertTrue($query['course_count']);
 
-        $this->Institutions->query = ['count_recent' => true];
-        $this->Institutions->getFilter();
-        $this->assertTrue($this->Institutions->query['count_recent']);
-        $this->assertTrue($this->Institutions->query['course_count']);
+		$this->Institutions->query = ['count_recent' => true];
+		$this->Institutions->getFilter();
+		$this->assertTrue($this->Institutions->query['count_recent']);
+		$this->assertTrue($this->Institutions->query['course_count']);
 
 		$this->Institutions->query = ['group' => ''];
 		$query = $this->Institutions->getFilter();
@@ -146,13 +106,14 @@ class InstitutionsTableTest extends TestCase
 		$this->assertArrayHasKey('city_id', $query);
 	}
 
-
-	public function testGetInstitution() {
+	public function testGetInstitution()
+	{
 		$institution = $this->Institutions->getInstitution(1);
 		$this->__testInstitution($institution);
 	}
 
-	private function __testInstitution($institution = []) {
+	private function __testInstitution($institution = [])
+	{
 		$this->assertArrayHasKey('course_count', $institution);
 		$this->assertArrayHasKey('id', $institution);
 		$this->assertArrayHasKey('name', $institution);
@@ -164,34 +125,34 @@ class InstitutionsTableTest extends TestCase
 		$this->assertArrayHasKey('name', $institution['city']);
 	}
 
-
-	public function testGetInstitutions() {
+	public function testGetInstitutions()
+	{
 		$this->Institutions->query = ['course_count' => true];
 		$institutions = $this->Institutions->getInstitutions();
-		foreach($institutions as $institution) {
+		foreach ($institutions as $institution) {
 			$this->assertArrayHasKey('course_count', $institution);
 		}
 		$this->Institutions->query = [];
 		$institutions = $this->Institutions->getInstitutions();
-		foreach($institutions as $institution) {
+		foreach ($institutions as $institution) {
 			// we retrieve an object here
 			$this->assertObjectNotHasAttribute('course_count', $institution);
 			$this->__testInstitution($institution);
 		}
-		$this->Institutions->query = ['course_count' => true,'sort_count' => true];
+		$this->Institutions->query = ['course_count' => true, 'sort_count' => true];
 		$institutions = $this->Institutions->getInstitutions();
 		$last = null;
-		foreach($institutions as $institution) {
-			if($last !== null)
+		foreach ($institutions as $institution) {
+			if ($last !== null)
 				$this->assertTrue($last > $institution['course_count']);
 			$last = $institution['course_count'];
 		}
 		$this->Institutions->query = ['group' => true, 'country_id' => '1'];
 		$institutions = $this->Institutions->getInstitutions();
-		foreach($institutions as $country => $c_institutions) {
+		foreach ($institutions as $country => $c_institutions) {
 			$this->assertTrue($country === 'Lorem ipsum dolor sit amet');
 			$this->assertTrue(is_array($c_institutions));
-			foreach($c_institutions as $key => $institution) {
+			foreach ($c_institutions as $key => $institution) {
 				$this->assertTrue(is_integer($key));
 				$this->assertNotEmpty($institution['name']);
 				$this->assertNotEmpty($institution['id']);

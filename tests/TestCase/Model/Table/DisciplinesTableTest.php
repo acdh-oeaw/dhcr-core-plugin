@@ -1,38 +1,20 @@
 <?php
+
 namespace DhcrCore\Test\TestCase\Model\Table;
 
 use DhcrCore\Model\Table\DisciplinesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
-/**
- * App\Model\Table\DisciplinesTable Test Case
- */
 class DisciplinesTableTest extends TestCase
 {
-    /**
-     * Test subject
-     *
-     * @var \App\Model\Table\DisciplinesTable
-     */
     public $Disciplines;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
     public $fixtures = [
         'plugin.DhcrCore.Disciplines',
         'plugin.DhcrCore.Courses',
         'plugin.DhcrCore.CoursesDisciplines'
     ];
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -40,40 +22,24 @@ class DisciplinesTableTest extends TestCase
         $this->Disciplines = TableRegistry::getTableLocator()->get('Disciplines', $config);
     }
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
     public function tearDown(): void
     {
         unset($this->Disciplines);
-
         parent::tearDown();
     }
 
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
     public function testInitialize()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-
-    public function testGetCleanQuery() {
+    public function testGetCleanQuery()
+    {
         $query = [
             'foo' => 'bar',
             'sort_count' => ''
@@ -83,8 +49,8 @@ class DisciplinesTableTest extends TestCase
         $this->assertArrayHasKey('sort_count', $query);
     }
 
-
-    public function testGetFilter() {
+    public function testGetFilter()
+    {
         $this->Disciplines->query = [
             'sort_count' => ''
         ];
@@ -100,19 +66,19 @@ class DisciplinesTableTest extends TestCase
         $this->assertTrue($this->Disciplines->query['course_count']);
     }
 
-
-    public function testGetDiscipline() {
+    public function testGetDiscipline()
+    {
         $record = $this->Disciplines->getDiscipline(1);
         $this->assertArrayHasKey('id', $record);
         $this->assertArrayHasKey('name', $record);
         $this->assertArrayHasKey('course_count', $record);
     }
 
-
-    public function testGetDisciplines() {
+    public function testGetDisciplines()
+    {
         $this->Disciplines->query = [];
         $records = $this->Disciplines->getDisciplines();
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $this->assertArrayHasKey('id', $record);
             $this->assertArrayHasKey('name', $record);
             // we're dealing with an object here
@@ -120,17 +86,16 @@ class DisciplinesTableTest extends TestCase
         }
         $this->Disciplines->query = ['course_count' => true];
         $records = $this->Disciplines->getDisciplines();
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $this->assertNotEmpty($record['course_count']);
         }
         $this->Disciplines->query = ['sort_count' => true];
         $records = $this->Disciplines->getDisciplines();
         $last = null;
-        foreach($records as $record) {
-            if($last !== null)
+        foreach ($records as $record) {
+            if ($last !== null)
                 $this->assertTrue($last > $record['course_count']);
             $last = $record['course_count'];
         }
     }
-
 }

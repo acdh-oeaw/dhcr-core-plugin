@@ -1,37 +1,19 @@
 <?php
+
 namespace DhcrCore\Test\TestCase\Model\Table;
 
 use DhcrCore\Model\Table\LanguagesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
-/**
- * App\Model\Table\LanguagesTable Test Case
- */
 class LanguagesTableTest extends TestCase
 {
-    /**
-     * Test subject
-     *
-     * @var \App\Model\Table\LanguagesTable
-     */
     public $Languages;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
     public $fixtures = [
         'plugin.DhcrCore.Languages',
         'plugin.DhcrCore.Courses'
     ];
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -39,40 +21,24 @@ class LanguagesTableTest extends TestCase
         $this->Languages = TableRegistry::getTableLocator()->get('Languages', $config);
     }
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
     public function tearDown(): void
     {
         unset($this->Languages);
-
         parent::tearDown();
     }
 
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
     public function testInitialize()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-
-    public function testGetCleanQuery() {
+    public function testGetCleanQuery()
+    {
         $query = [
             'foo' => 'bar',
             'sort_count' => ''
@@ -82,8 +48,8 @@ class LanguagesTableTest extends TestCase
         $this->assertArrayHasKey('sort_count', $query);
     }
 
-
-    public function testGetFilter() {
+    public function testGetFilter()
+    {
         $this->Languages->query = [
             'sort_count' => ''
         ];
@@ -99,19 +65,19 @@ class LanguagesTableTest extends TestCase
         $this->assertTrue($this->Languages->query['course_count']);
     }
 
-
-    public function testGetLanguage() {
+    public function testGetLanguage()
+    {
         $record = $this->Languages->getLanguage(1);
         $this->assertArrayHasKey('id', $record);
         $this->assertArrayHasKey('name', $record);
         $this->assertArrayHasKey('course_count', $record);
     }
 
-
-    public function testGetLanguages() {
+    public function testGetLanguages()
+    {
         $this->Languages->query = [];
         $records = $this->Languages->getLanguages();
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $this->assertArrayHasKey('id', $record);
             $this->assertArrayHasKey('name', $record);
             // we're dealing with an object here
@@ -119,17 +85,16 @@ class LanguagesTableTest extends TestCase
         }
         $this->Languages->query = ['course_count' => true];
         $records = $this->Languages->getLanguages();
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $this->assertNotEmpty($record['course_count']);
         }
         $this->Languages->query = ['sort_count' => true];
         $records = $this->Languages->getLanguages();
         $last = null;
-        foreach($records as $record) {
-            if($last !== null)
+        foreach ($records as $record) {
+            if ($last !== null)
                 $this->assertTrue($last > $record['course_count']);
             $last = $record['course_count'];
         }
     }
-
 }

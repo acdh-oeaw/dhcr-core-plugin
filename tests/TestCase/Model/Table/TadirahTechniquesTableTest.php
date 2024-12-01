@@ -1,38 +1,20 @@
 <?php
+
 namespace DhcrCore\Test\TestCase\Model\Table;
 
 use DhcrCore\Model\Table\TadirahTechniquesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
-/**
- * App\Model\Table\TadirahTechniquesTable Test Case
- */
 class TadirahTechniquesTableTest extends TestCase
 {
-    /**
-     * Test subject
-     *
-     * @var \App\Model\Table\TadirahTechniquesTable
-     */
     public $TadirahTechniques;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
     public $fixtures = [
         'plugin.DhcrCore.TadirahTechniques',
         'plugin.DhcrCore.Courses',
         'plugin.DhcrCore.CoursesTadirahTechniques'
     ];
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -40,40 +22,24 @@ class TadirahTechniquesTableTest extends TestCase
         $this->TadirahTechniques = TableRegistry::getTableLocator()->get('TadirahTechniques', $config);
     }
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
     public function tearDown(): void
     {
         unset($this->TadirahTechniques);
-
         parent::tearDown();
     }
 
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
     public function testInitialize()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-
-    public function testGetCleanQuery() {
+    public function testGetCleanQuery()
+    {
         $query = [
             'foo' => 'bar',
             'sort_count' => ''
@@ -83,8 +49,8 @@ class TadirahTechniquesTableTest extends TestCase
         $this->assertArrayHasKey('sort_count', $query);
     }
 
-
-    public function testGetFilter() {
+    public function testGetFilter()
+    {
         $this->TadirahTechniques->query = [
             'sort_count' => ''
         ];
@@ -100,19 +66,19 @@ class TadirahTechniquesTableTest extends TestCase
         $this->assertTrue($this->TadirahTechniques->query['course_count']);
     }
 
-
-    public function testGetTadirahTechnique() {
+    public function testGetTadirahTechnique()
+    {
         $record = $this->TadirahTechniques->getTadirahTechnique(1);
         $this->assertArrayHasKey('id', $record);
         $this->assertArrayHasKey('name', $record);
         $this->assertArrayHasKey('course_count', $record);
     }
 
-
-    public function testGetTadirahTechniques() {
+    public function testGetTadirahTechniques()
+    {
         $this->TadirahTechniques->query = [];
         $records = $this->TadirahTechniques->getTadirahTechniques();
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $this->assertArrayHasKey('id', $record);
             $this->assertArrayHasKey('name', $record);
             // we're dealing with an object here
@@ -120,17 +86,16 @@ class TadirahTechniquesTableTest extends TestCase
         }
         $this->TadirahTechniques->query = ['course_count' => true];
         $records = $this->TadirahTechniques->getTadirahTechniques();
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $this->assertNotEmpty($record['course_count']);
         }
         $this->TadirahTechniques->query = ['sort_count' => true];
         $records = $this->TadirahTechniques->getTadirahTechniques();
         $last = null;
-        foreach($records as $record) {
-            if($last !== null)
+        foreach ($records as $record) {
+            if ($last !== null)
                 $this->assertTrue($last > $record['course_count']);
             $last = $record['course_count'];
         }
     }
-
 }
