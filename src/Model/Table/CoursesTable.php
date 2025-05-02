@@ -93,6 +93,8 @@ class CoursesTable extends Table
 		$this->belongsToMany('DhcrCore.Disciplines');
 		$this->belongsToMany('DhcrCore.TadirahTechniques');
 		$this->belongsToMany('DhcrCore.TadirahObjects');
+
+		$this->hasMany('DhcrCore.ExternalResources');
 	}
 
 	public function validationDefault(Validator $validator): Validator
