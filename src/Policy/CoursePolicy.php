@@ -28,6 +28,20 @@ class CoursePolicy
         return false;
     }
 
+    public function canShowExtResources(IdentityInterface $user, Course $course)
+    {
+        if ($course->user_id == $user->id) {  // contributor own course
+            return true;
+        }
+        if ($user->user_role_id == 2 && $course->country_id == $user->country_id) {  //  moderator in own country
+            return true;
+        }
+        if ($user->is_admin) {  // admin all
+            return true;
+        }
+        return false;
+    }
+
     public function canDelete(IdentityInterface $user, Course $course)
     {
         return false;
