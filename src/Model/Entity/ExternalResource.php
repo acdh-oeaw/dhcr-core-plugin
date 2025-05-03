@@ -14,6 +14,7 @@ class ExternalResource extends Entity
         'url' => true,
         'type' => true,
         'affiliation' => true,
+        'visible' => true,
         'created' => true,
         'updated' => true,
         'course' => true,
