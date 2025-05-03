@@ -49,7 +49,8 @@ class CoursesTable extends Table
 		'CourseDurationUnits',
 		'Disciplines',
 		'TadirahTechniques',
-		'TadirahObjects'
+		'TadirahObjects',
+		'ExternalResources'
 	];
 
 	public function initialize(array $config): void
