@@ -42,7 +42,7 @@ class CoursePolicy
         return false;
     }
 
-    public function canAddExtResources(IdentityInterface $user, Course $course)
+    public function canAddExtResource(IdentityInterface $user, Course $course)
     {
         if ($course->user_id == $user->id) {  // contributor own course
             return true;
@@ -56,7 +56,7 @@ class CoursePolicy
         return false;
     }
 
-    public function canEditExtResources(IdentityInterface $user, Course $course)
+    public function canEditExtResource(IdentityInterface $user, Course $course)
     {
         if ($course->user_id == $user->id) {  // contributor own course
             return true;
