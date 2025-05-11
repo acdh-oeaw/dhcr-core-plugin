@@ -25,7 +25,8 @@ class CoursesTableTest extends TestCase
         'plugin.DhcrCore.TadirahTechniques',
         'plugin.DhcrCore.CoursesTadirahObjects',
         'plugin.DhcrCore.CoursesTadirahTechniques',
-        'plugin.DhcrCore.CoursesDisciplines'
+        'plugin.DhcrCore.CoursesDisciplines',
+        'plugin.DhcrCore.ExternalResources',
     ];
 
     public function setUp(): void
