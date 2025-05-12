@@ -43,7 +43,7 @@ class ExternalResourcesTable extends Table
             ->maxLength('url', 255)
             ->requirePresence('url', 'create')
             ->notEmptyString('url')
-            ->add('url', 'valid-url', ['rule' => 'url', 'message' => 'Provide a valid URL, start with https:// or http://'])
+            ->add('url', 'valid-url', ['rule' => 'url', 'message' => 'Provide a valid URL'])
             ->add('url', 'startsWithHttp', [
                 'rule' => 'startsWithHttp',
                 'message' => 'Start with https:// or http://',
