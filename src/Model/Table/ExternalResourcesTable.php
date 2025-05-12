@@ -68,6 +68,7 @@ class ExternalResourcesTable extends Table
         if (str_starts_with($url, 'https://') || str_starts_with($url, 'http://')) {
             return true;
         }
+        return false;
     }
 
     public function buildRules(RulesChecker $rules): RulesChecker
