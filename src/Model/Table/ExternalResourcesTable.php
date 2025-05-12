@@ -43,7 +43,7 @@ class ExternalResourcesTable extends Table
             ->maxLength('url', 255)
             ->requirePresence('url', 'create')
             ->notEmptyString('url')
-            ->add('url', 'valid-url', ['rule' => 'url']);
+            ->add('url', 'valid-url', ['rule' => 'url', 'message' => 'Provide a valid URL, start with https:// or http://']);
 
         $validator
             ->scalar('type')
