@@ -23,7 +23,6 @@ class ExternalResourcesTable extends Table
 
         $this->belongsTo('DhcrCore.Courses', [
             'foreignKey' => 'course_id',
-            'joinType' => 'INNER',
         ]);
     }
 
