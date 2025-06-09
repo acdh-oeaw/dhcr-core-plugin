@@ -20,7 +20,7 @@ class ExternalResourcesFixture extends TestFixture
                 'affiliation' => 'Lorem ipsum dolor sit amet',
                 'visible' => 1,
                 'created' => '2025-05-11 19:11:26',
-                'updated' => '2025-05-11 19:11:26',
+                'modified' => '2025-05-11 19:11:26',
             ],
         ];
         parent::init();
