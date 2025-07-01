@@ -221,6 +221,15 @@ class CoursesTable extends Table
 			->decimal('lat')
 			->notEmptyString('lat');
 
+		$validator
+			->scalar('original_name')
+			->maxLength('original_name', 255)
+			->allowEmptyString('original_name');
+
+		$validator
+			->scalar('original_description')
+			->allowEmptyString('original_description');
+
 		return $validator;
 	}
 

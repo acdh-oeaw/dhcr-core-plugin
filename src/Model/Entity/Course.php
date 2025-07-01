@@ -54,6 +54,8 @@ class Course extends Entity
         'tadirah_objects' => true,
         'tadirah_techniques' => true,
         'external_resource' => true,
+        'original_name' => true,
+        'original_description' => true,
     ];
 
     protected $_hidden = [
