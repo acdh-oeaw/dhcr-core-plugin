@@ -19,12 +19,6 @@ class ExternalResourcesFixture extends TestFixture
         'visible' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
-        '_indexes' => [
-            'course_id' => ['type' => 'index', 'columns' => ['course_id'], 'length' => []],
-        ],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-        ],
         '_options' => [
             'engine' => 'InnoDB',
             'collation' => 'utf8mb3_general_ci'
