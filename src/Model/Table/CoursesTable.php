@@ -393,6 +393,7 @@ class CoursesTable extends Table
 							'CoursesTadirahTechniques.tadirah_technique_id IN' => $value
 						]
 					];
+					$this->hasMany('CoursesTadirahTechniques');
 					break;
 			}
 		}
